@@ -97,7 +97,7 @@ def main():
             #Memvisualisasikan hasil prediksi
             plt.figure(figsize=(20,7))
             plt.plot(df['Tanggal'].values, values, color = 'blue', label = 'Curah Hujan')
-            plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions, color = 'red', label = 'Prediksi Curah Hujan')
+            plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions[36621:], color = 'red', label = 'Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
