@@ -67,6 +67,12 @@ def main():
          'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50',
          'K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75'))
         if preprocessing == 'K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
+            scaler = MinMaxScaler()
+            df_imputed = pd.read_csv('imputasi_n_5.csv')
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
+
+
             model_path = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
             model = tf.keras.models.load_model(model_path)
             model_path_pathlib = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
@@ -74,12 +80,8 @@ def main():
             
             # Memuat data testing (x_test)
             x_test = pd.read_csv('xtest_n_5_epochs_50_lr_0.01_ts_75.csv')
-            
+
             # Melakukan prediksi
-            scaler = MinMaxScaler()
-            df_imputed = pd.read_csv('imputasi_n_5.csv')
-            scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            scaled_data_df = pd.DataFrame(scaled_data)
             predictions = model.predict(x_test)
             predictions = scaler.inverse_transform(predictions)
              
