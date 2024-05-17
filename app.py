@@ -77,10 +77,15 @@ def main():
             
             # Melakukan prediksi
             predictions = model.predict(x_test)
+            predictions = scaler.inverse_transform(predictions)
              
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
             st.write(predictions)
+
+            # Menampilkan RMSE
+            rmse = np.sqrt(np.mean(predictions - y_test)**2)
+            st.write(rmse)
             
         # elif preprocessing == 'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
         #     model_path = 'model_lstm_knn_s2.hdf5'
