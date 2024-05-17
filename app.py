@@ -77,6 +77,7 @@ def main():
             
             # Melakukan prediksi
             scaler = MinMaxScaler()
+            df_imputed = pd.read_csv('imputasi_n_5.csv')
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             predictions = model.predict(x_test)
