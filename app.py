@@ -96,13 +96,15 @@ def main():
 
             #Memvisualisasikan hasil prediksi
             plt.figure(figsize=(20,7))
-            plt.plot(df['Tanggal'].values, values, color = 'blue', label = 'Curah Hujan')
-            plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions[36621:], color = 'red', label = 'Prediksi Curah Hujan')
+            fig1 = plt.plot(df['Tanggal'].values, values, color = 'blue', label = 'Curah Hujan')
+            fig2 = plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions[36621:], color = 'red', label = 'Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
             plt.legend()
             plt.show()
+            st.pyplot(fig1)
+            st.pyplot(fig2)
             
         # elif preprocessing == 'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
         #     model_path = 'model_lstm_knn_s2.hdf5'
