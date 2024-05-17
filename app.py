@@ -71,7 +71,7 @@ def main():
             df_imputed = pd.read_csv('imputasi_n_5.csv')
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
-
+            values = scaled_data_df.values
 
             model_path = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
             model = tf.keras.models.load_model(model_path)
