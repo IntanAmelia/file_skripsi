@@ -91,7 +91,7 @@ def main():
 
             # Menampilkan RMSE
             y_test = pd.read_csv('ytest_n_5_epochs_50_lr_0.01_ts_75.csv')
-            rmse = np.sqrt(np.mean(predictions - y_test)**2)
+            rmse = np.sqrt(np.mean(predictions - x_test)**2)
             st.write(rmse)
             
         # elif preprocessing == 'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
