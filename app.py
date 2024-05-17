@@ -84,6 +84,7 @@ def main():
             st.write(predictions)
 
             # Menampilkan RMSE
+            y_test = pd.read_csv('ytest_n_5_epochs_50_lr_0.01_ts_75.csv')
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write(rmse)
             
