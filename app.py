@@ -67,13 +67,13 @@ def main():
          'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50',
          'K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75'))
         if preprocessing == 'K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
-            model_path = 'model_lstm_knn_s1.hdf5'
+            model_path = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s1.hdf5'
+            model_path_pathlib = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             
             # Memuat data testing (x_test)
-            x_test = pd.read_csv('x_test_knn_s1.csv')
+            x_test = pd.read_csv('xtest_n_5_epochs_50_lr_0.01_ts_75.csv')
             
             # Melakukan prediksi
             predictions = model.predict(x_test)
