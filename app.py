@@ -76,6 +76,9 @@ def main():
             x_test = pd.read_csv('xtest_n_5_epochs_50_lr_0.01_ts_75.csv')
             
             # Melakukan prediksi
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
             predictions = model.predict(x_test)
             predictions = scaler.inverse_transform(predictions)
              
@@ -84,9 +87,6 @@ def main():
             st.write(predictions)
 
             # Menampilkan RMSE
-            scaler = MinMaxScaler()
-            scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            scaled_data_df = pd.DataFrame(scaled_data)
             y_test = pd.read_csv('ytest_n_5_epochs_50_lr_0.01_ts_75.csv')
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write(rmse)
