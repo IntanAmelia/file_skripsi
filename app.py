@@ -94,18 +94,6 @@ def main():
             rmse = np.sqrt(np.mean(predictions - x_test)**2)
             st.write(rmse)
 
-            # #Memvisualisasikan hasil prediksi
-            # plt.figure(figsize=(20,7))
-            # fig1 = plt.plot(df['Tanggal'].values, values, color = 'blue', label = 'Curah Hujan')
-            # fig2 = plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions[36621:], color = 'red', label = 'Prediksi Curah Hujan')
-            # plt.title('Prediksi Curah Hujan')
-            # plt.xlabel('Tanggal')
-            # plt.ylabel('Curah Hujan (mm)')
-            # plt.legend()
-            # plt.show()
-            # st.pyplot(fig1)
-            # st.pyplot(fig2)
-
             # Membuat plot
             plt.figure(figsize=(20, 7))
             plt.plot(df['Tanggal'].values, values, color = 'blue', label = 'Curah Hujan')
