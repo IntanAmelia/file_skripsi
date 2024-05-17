@@ -93,6 +93,16 @@ def main():
             y_test = pd.read_csv('ytest_n_5_epochs_50_lr_0.01_ts_75.csv')
             rmse = np.sqrt(np.mean(predictions - x_test)**2)
             st.write(rmse)
+
+            #Memvisualisasikan hasil prediksi
+            plt.figure(figsize=(20,7))
+            plt.plot(df['Tanggal'].values[1193:], values[1193:], color = 'blue', label = 'Curah Hujan')
+            plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions, color = 'red', label = 'Prediksi Curah Hujan')
+            plt.title('Prediksi Curah Hujan')
+            plt.xlabel('Tanggal')
+            plt.ylabel('Curah Hujan (mm)')
+            plt.legend()
+            plt.show()
             
         # elif preprocessing == 'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
         #     model_path = 'model_lstm_knn_s2.hdf5'
