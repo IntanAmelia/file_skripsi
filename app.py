@@ -69,7 +69,7 @@ def main():
         if preprocessing == 'K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
             scaler = MinMaxScaler()
             df_imputed = pd.read_csv('imputasi_n_5.csv')
-            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data = scaler.fit_transform(df_imputed['RR'])
             scaled_data_df = pd.DataFrame(scaled_data)
 
 
