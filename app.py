@@ -54,24 +54,27 @@ def main():
         """, unsafe_allow_html=True)
         st.write("""
         <ol>
-        <li> K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25 </li>
-        <li> K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50 </li>
-        <li> K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75 </li>
+        <li> Imputasi Missing Value </li>
+        <li> Normalisasi Data </li>
+        <li> Prediksi Menggunakan LSTM </li>
+        <li> RMSE </li>
+        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi <li>
         </ol>
         """,unsafe_allow_html=True)
 
-        preprocessing = st.radio(
-        "Preprocessing Data",
-        ('K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25',
-         'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50',
-         'K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75'))
-        if preprocessing == 'K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
-            scaler = MinMaxScaler()
+        model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'RMSE', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
+        if model_knn == 'Imputasi Missing Value':
+            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value')
             df_imputed = pd.read_csv('dataset_imputasi.csv')
+            st.write(df_imputed)
+
+        elif model_knn == 'Normalisasi Data':
+            scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
 
+        elif model_knn == 'Prediksi Menggunakan LSTM':
             model_path = 'model_lstm_knn_s1.h5'
             model = tf.keras.models.load_model(model_path)
             model_path_pathlib = 'model_lstm_knn_s1.h5'
@@ -80,7 +83,6 @@ def main():
             # Memuat data testing (x_test)
             x_test = pd.read_csv('x_test.csv')
             
-
             # Melakukan prediksi
             predictions = model.predict(x_test['x_test_0'])
             predictions = scaler.inverse_transform(predictions)
@@ -89,12 +91,16 @@ def main():
             st.write("Hasil Prediksi:")
             st.write(predictions)
 
+        elif model_knn == 'RMSE':
             # Menampilkan RMSE
             y_test = pd.read_csv('y_test.csv')
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
+            st.write('RMSE : ')
             st.write(rmse)
 
+        elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             # Membuat plot
+            values = scaled_data_df.values
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1200:], df_imputed['RR'][1200:], color='blue', label='Curah Hujan Asli')
@@ -105,39 +111,7 @@ def main():
             plt.legend()
             # Menampilkan plot di Streamlit
             st.pyplot(plt)
-            
-        # elif preprocessing == 'K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
-        #     model_path = 'model_lstm_knn_s2.hdf5'
-        #     model = tf.keras.models.load_model(model_path)
-        #     model_path_pathlib = 'model_lstm_knn_s2.hdf5'
-        #     model = tf.keras.models.load_model(model_path_pathlib)
-            
-        #     # Memuat data testing (x_test)
-        #     x_test = pd.read_csv('x_test_knn_s2.csv')
-            
-        #     # Melakukan prediksi
-        #     predictions = model.predict(x_test)
-            
-        #     # Menampilkan hasil prediksi
-        #     st.write("Hasil Prediksi:")
-        #     st.write(predictions)
-            
-        # elif preprocessing == 'K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75':
-        #     model_path = 'model_lstm_knn_s3.hdf5'
-        #     model = tf.keras.models.load_model(model_path)
-        #     model_path_pathlib = 'model_lstm_knn_s3.hdf5'
-        #     model = tf.keras.models.load_model(model_path_pathlib)
-            
-        #     # Memuat data testing (x_test)
-        #     x_test = pd.read_csv('x_test_knn_s3.csv')
-            
-        #     # Melakukan prediksi
-        #     predictions = model.predict(x_test)
-            
-        #     # Menampilkan hasil prediksi
-        #     st.write("Hasil Prediksi:")
-        #     st.write(predictions)
-
+         
     with tab3:
         st.write("""
         <h5>Menghapus Data yang Terdapat Missing Value</h5>
