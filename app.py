@@ -57,18 +57,18 @@ def main():
         <li> Imputasi Missing Value </li>
         <li> Normalisasi Data </li>
         <li> Prediksi Menggunakan LSTM </li>
-        <li> RMSE </li>
-        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi <li>
+        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi </li>
         </ol>
         """,unsafe_allow_html=True)
 
-        model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'RMSE', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
+        model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value')
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
@@ -91,7 +91,6 @@ def main():
             st.write("Hasil Prediksi:")
             st.write(predictions)
 
-        elif model_knn == 'RMSE':
             # Menampilkan RMSE
             y_test = pd.read_csv('y_test.csv')
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
