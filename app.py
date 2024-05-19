@@ -26,9 +26,10 @@ def main():
     page_title="PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE"
 )
     st.title('PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE')
+
+    tab1, tab2, tab3, tab4 = st.tabs(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Hapus Data yang terdapat Missing Value", "Prediksi Selanjutnya"])
     
-    
-    with st.sidebar:
+    with tab1:
         st.write("""
         <h5>Data Understanding</h5>
         <br>
@@ -46,7 +47,7 @@ def main():
         st.write("Dataset Curah Hujan : ")
         st.write(df)
         
-    with st.sidebar:
+    with tab2:
         st.write("""
         <h5>Imputasi Missing Value Menggunakan KNN</h5>
         <br>
@@ -137,7 +138,7 @@ def main():
         #     st.write("Hasil Prediksi:")
         #     st.write(predictions)
 
-    with st.sidebar:
+    with tab3:
         st.write("""
         <h5>Menghapus Data yang Terdapat Missing Value</h5>
         <br>
@@ -204,7 +205,7 @@ def main():
         #     st.write("Hasil Prediksi:")
         #     st.write(predictions)
 
-    # with st.sidebar:
+    # with tab4:
 
     
         
