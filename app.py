@@ -80,9 +80,10 @@ def main():
             
             # Memuat data testing (x_test)
             x_test = pd.read_csv('x_test.csv')
+            
 
             # Melakukan prediksi
-            predictions = model.predict(x_test)
+            predictions = model.predict(x_test['x_test_0'])
             predictions = scaler.inverse_transform(predictions)
              
             # Menampilkan hasil prediksi
