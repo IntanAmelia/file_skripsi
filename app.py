@@ -79,7 +79,7 @@ def main():
             model = tf.keras.models.load_model(model_path_pathlib)
             
             # Memuat data testing (x_test)
-            x_test = pd.read_csv('xtest_n_5_epochs_50_lr_0.01_ts_75.csv')
+            x_test = pd.read_csv('xtest.csv')
 
             # Melakukan prediksi
             predictions = model.predict(x_test)
@@ -90,8 +90,8 @@ def main():
             st.write(predictions)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('ytest_n_5_epochs_50_lr_0.01_ts_75.csv')
-            predictions = predictions[37814:]
+            y_test = pd.read_csv('ytest.csv')
+            #predictions = predictions[37814:]
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write(rmse)
 
