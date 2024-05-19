@@ -93,7 +93,7 @@ def main():
             # Menampilkan RMSE
             y_test = pd.read_csv('y_test.csv')
             #predictions = predictions[37814:]
-            rmse = np.sqrt(np.mean(predictions - x_test)**2)
+            rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write(rmse)
 
             # Membuat plot
