@@ -27,8 +27,7 @@ def main():
 )
     st.title('PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE')
     
-    sb1, sb2, sb3, sb4 = st.sidebar(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Hapus Data yang terdapat Missing Value", "Prediksi Selanjutnya"])
-
+    
     with sb1:
         st.write("""
         <h5>Data Understanding</h5>
