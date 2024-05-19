@@ -97,9 +97,10 @@ def main():
             st.write(rmse)
 
             # Membuat plot
+            df['Tanggal'] = pd.to_datetime(df['Tanggal'])
             plt.figure(figsize=(20, 7))
             plt.plot(df['Tanggal'].values[1200:], values[1200:], color = 'blue', label = 'Curah Hujan')
-            plt.plot(df['Tanggal'][-predictions.shape[0]:].values, predictions, color = 'red', label = 'Prediksi Curah Hujan')
+            plt.plot(df['Tanggal'].values[1200:], predictions, color = 'red', label = 'Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
