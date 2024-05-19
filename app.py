@@ -72,7 +72,6 @@ def main():
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
-            values = scaled_data_df.values
             st.write('Data yang telah Dilakukan Proses Normalisasi Data')
             st.write(scaled_data_df)
 
@@ -106,8 +105,13 @@ def main():
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             # Membuat plot
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
+            
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1200:], df_imputed['RR'][1200:], color='blue', label='Curah Hujan Asli')
             plt.plot(df_imputed['Tanggal'][1200:], predictions, color='red', label='Prediksi Curah Hujan')
