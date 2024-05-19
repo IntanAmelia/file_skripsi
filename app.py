@@ -74,7 +74,7 @@ def main():
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
             st.write('Data yang telah Dilakukan Proses Normalisasi Data')
-            st.write(df_imputed)
+            st.write(scaled_data_df)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
             model_path = 'model_lstm_knn_s1.h5'
