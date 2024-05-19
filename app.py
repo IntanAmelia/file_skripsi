@@ -68,14 +68,14 @@ def main():
          'K = 5; batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75'))
         if preprocessing == 'K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
             scaler = MinMaxScaler()
-            df_imputed = pd.read_csv('imputasi_n_5.csv')
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
 
-            model_path = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
+            model_path = 'model_lstm_knn_s1.h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_n_5_epochs_50_lr_0.01_ts_75.h5'
+            model_path_pathlib = 'model_lstm_knn_s1.h5.h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             
             # Memuat data testing (x_test)
