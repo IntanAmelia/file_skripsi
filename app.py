@@ -63,7 +63,7 @@ def main():
 
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
-            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value')
+            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             st.write(df_imputed)
 
@@ -73,6 +73,8 @@ def main():
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
+            st.write('Data yang telah Dilakukan Proses Normalisasi Data')
+            st.write(df_imputed)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
             model_path = 'model_lstm_knn_s1.h5'
