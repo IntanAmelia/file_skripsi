@@ -77,6 +77,11 @@ def main():
             st.write(scaled_data_df)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
+            
             model_path = 'model_lstm_knn_s1.h5'
             model = tf.keras.models.load_model(model_path)
             model_path_pathlib = 'model_lstm_knn_s1.h5'
