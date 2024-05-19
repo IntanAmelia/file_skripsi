@@ -75,7 +75,7 @@ def main():
 
             model_path = 'model_lstm_knn_s1.h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s1.h5.h5'
+            model_path_pathlib = 'model_lstm_knn_s1.h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             
             # Memuat data testing (x_test)
