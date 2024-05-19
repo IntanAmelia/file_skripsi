@@ -27,9 +27,9 @@ def main():
 )
     st.title('PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE')
     
-    tab1, tab2, tab3, tab4 = st.tabs(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Hapus Data yang terdapat Missing Value", "Prediksi Selanjutnya"])
+    sb1, sb2, sb3, sb4 = st.sidebar(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Hapus Data yang terdapat Missing Value", "Prediksi Selanjutnya"])
 
-    with tab1:
+    with sb1:
         st.write("""
         <h5>Data Understanding</h5>
         <br>
@@ -47,13 +47,12 @@ def main():
         st.write("Dataset Curah Hujan : ")
         st.write(df)
         
-    with tab2:
+    with sb2:
         st.write("""
         <h5>Imputasi Missing Value Menggunakan KNN</h5>
         <br>
         """, unsafe_allow_html=True)
         st.write("""
-        Pada skenario ini akan dibagi menjadi beberapa parameter, yakni sebagai berikut : 
         <ol>
         <li> K = 3; batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25 </li>
         <li> K = 4; batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50 </li>
@@ -139,7 +138,7 @@ def main():
         #     st.write("Hasil Prediksi:")
         #     st.write(predictions)
 
-    with tab3:
+    with sb3:
         st.write("""
         <h5>Menghapus Data yang Terdapat Missing Value</h5>
         <br>
@@ -206,7 +205,7 @@ def main():
         #     st.write("Hasil Prediksi:")
         #     st.write(predictions)
 
-    # with tab4:
+    # with sb4:
 
     
         
