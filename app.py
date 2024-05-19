@@ -111,6 +111,15 @@ def main():
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
+            model_path = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path)
+            model_path_pathlib = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path_pathlib)
+            # Memuat data testing (x_test)
+            x_test = pd.read_csv('x_test.csv')
+            # Melakukan prediksi
+            predictions = model.predict(x_test['x_test_0'])
+            predictions = scaler.inverse_transform(predictions)
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1200:], df_imputed['RR'][1200:], color='blue', label='Curah Hujan Asli')
