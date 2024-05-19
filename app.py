@@ -99,7 +99,7 @@ def main():
             # Membuat plot
             df['Tanggal'] = pd.to_datetime(df['Tanggal'])
             plt.figure(figsize=(20, 7))
-            plt.plot(df['Tanggal'], df['RR'], color='blue', label='Curah Hujan Asli')
+            plt.plot(df['Tanggal'][1200:], df['RR'][1200:], color='blue', label='Curah Hujan Asli')
             plt.plot(df['Tanggal'][1200:], predictions, color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
             plt.xlabel('Tanggal')
