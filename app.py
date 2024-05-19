@@ -92,15 +92,14 @@ def main():
 
             # Menampilkan RMSE
             y_test = pd.read_csv('y_test.csv')
-            #predictions = predictions[37814:]
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write(rmse)
 
             # Membuat plot
-            df['Tanggal'] = pd.to_datetime(df['Tanggal'])
+            df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
             plt.figure(figsize=(20, 7))
-            plt.plot(df['Tanggal'][1200:], df['RR'][1200:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df['Tanggal'][1200:], predictions, color='red', label='Prediksi Curah Hujan')
+            plt.plot(df_imputed['Tanggal'][1200:], df_imputed['RR'][1200:], color='blue', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1200:], predictions, color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
