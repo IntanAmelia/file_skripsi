@@ -262,6 +262,9 @@ def main():
         st.pyplot(plt)
 
         # Plotting the combined predictions
+        # Melakukan prediksi
+        prediksi = model.predict(x_test['x_test_0'])
+        prediksi = scaler.inverse_transform(prediksi)
         plt.figure(figsize=(12, 6))
         plt.plot(df_imputed['Tanggal'], df_imputed['RR'], color='blue', label='Curah Hujan Asli')
         plt.plot(df_imputed['Tanggal'][-len(predictions):], predictions, color='green', label='Prediksi Curah Hujan')
