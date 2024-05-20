@@ -251,7 +251,7 @@ def main():
 
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        plt.plot(range(len(future_predictions_denormalized)), future_predictions_denormalized, marker='o', color='red', label='Future Predictions')
+        plt.plot(range(len(future_predictions_denormalisasi)), future_predictions_denormalisasi, marker='o', color='red', label='Future Predictions')
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Time Step')
         plt.ylabel('Curah Hujan (mm)')
