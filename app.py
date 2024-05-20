@@ -223,7 +223,7 @@ def main():
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_lstm_hapusdata.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test['x_test_0'][-25]  # Menggunakan bagian terakhir dari data testing sebagai x_last_window
+        x_last_window = x_test['x_test_0'][25]  # Menggunakan bagian terakhir dari data testing sebagai x_last_window
         last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
         
         for _ in range(n):
