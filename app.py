@@ -137,67 +137,84 @@ def main():
         <br>
         """, unsafe_allow_html=True)
         st.write("""
-        Pada skenario ini akan dibagi menjadi beberapa parameter, yakni sebagai berikut : 
         <ol>
-        <li> Batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25 </li>
-        <li> Batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50 </li>
-        <li> Batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75 </li>
+        <li> Imputasi Missing Value </li>
+        <li> Normalisasi Data </li>
+        <li> Prediksi Menggunakan LSTM </li>
+        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi </li>
         </ol>
         """,unsafe_allow_html=True)
 
-        preprocessing = st.radio(
-        "Preprocessing Data",
-        ('Batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25',
-         'Batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50',
-         'Batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75'))
-        # if preprocessing == 'Batch size = 32; hidden layer = 100; learning rate = 0.01; epoch = 12; time step = 25':
-        #     model_path = 'model_lstm_hapusdata_s1.hdf5'
-        #     model = tf.keras.models.load_model(model_path)
-        #     model_path_pathlib = 'model_lstm_hapusdata_s1.hdf5'
-        #     model = tf.keras.models.load_model(model_path_pathlib)
-            
-        #     # Memuat data testing (x_test)
-        #     x_test = pd.read_csv('x_test_hapusdata_s1.csv')
-            
-        #     # Melakukan prediksi
-        #     predictions = model.predict(x_test)
-            
-        #     # Menampilkan hasil prediksi
-        #     st.write("Hasil Prediksi:")
-        #     st.write(predictions)
-            
-        # elif preprocessing == 'Batch size = 32; hidden layer = 100; learning rate = 0.001; epoch = 25; time step = 50':
-        #     model_path = 'model_lstm_hapusdata_s2.hdf5'
-        #     model = tf.keras.models.load_model(model_path)
-        #     model_path_pathlib = 'model_lstm_hapusdata_s2.hdf5'
-        #     model = tf.keras.models.load_model(model_path_pathlib)
-            
-        #     # Memuat data testing (x_test)
-        #     x_test = pd.read_csv('x_test_hapusdata_s2.csv')
-            
-        #     # Melakukan prediksi
-        #     predictions = model.predict(x_test)
-            
-        #     # Menampilkan hasil prediksi
-        #     st.write("Hasil Prediksi:")
-        #     st.write(predictions)
-            
-        # elif preprocessing == 'Batch size = 32; hidden layer = 100; learning rate = 0.0001; epoch = 50; time step = 75':
-        #     model_path = 'model_lstm_hapusdata_s3.hdf5'
-        #     model = tf.keras.models.load_model(model_path)
-        #     model_path_pathlib = 'model_lstm_hapusdata_s3.hdf5'
-        #     model = tf.keras.models.load_model(model_path_pathlib)
-            
-        #     # Memuat data testing (x_test)
-        #     x_test = pd.read_csv('x_test_hapusdata_s3.csv')
-            
-        #     # Melakukan prediksi
-        #     predictions = model.predict(x_test)
-            
-        #     # Menampilkan hasil prediksi
-        #     st.write("Hasil Prediksi:")
-        #     st.write(predictions)
+        model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
+        if model_knn == 'Imputasi Missing Value':
+            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            st.write(df_imputed)
 
+        elif model_knn == 'Normalisasi Data':
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
+            st.write('Data yang telah Dilakukan Proses Normalisasi Data')
+            st.write(scaled_data_df)
+
+        elif model_knn == 'Prediksi Menggunakan LSTM':
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
+            
+            model_path = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path)
+            model_path_pathlib = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path_pathlib)
+            
+            # Memuat data testing (x_test)
+            x_test = pd.read_csv('x_test.csv')
+            
+            # Melakukan prediksi
+            predictions = model.predict(x_test['x_test_0'])
+            predictions = scaler.inverse_transform(predictions)
+             
+            # Menampilkan hasil prediksi
+            st.write("Hasil Prediksi:")
+            st.write(predictions)
+
+            # Menampilkan RMSE
+            y_test = pd.read_csv('y_test.csv')
+            rmse = np.sqrt(np.mean(predictions - y_test)**2)
+            st.write('RMSE : ')
+            st.write(rmse)
+
+        elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
+            # Membuat plot
+            df_imputed = pd.read_csv('dataset_imputasi.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            scaled_data_df = pd.DataFrame(scaled_data)
+            values = scaled_data_df.values
+            df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
+            model_path = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path)
+            model_path_pathlib = 'model_lstm_knn_s1.h5'
+            model = tf.keras.models.load_model(model_path_pathlib)
+            # Memuat data testing (x_test)
+            x_test = pd.read_csv('x_test.csv')
+            # Melakukan prediksi
+            predictions = model.predict(x_test['x_test_0'])
+            predictions = scaler.inverse_transform(predictions)
+            
+            plt.figure(figsize=(20, 7))
+            plt.plot(df_imputed['Tanggal'][1200:], df_imputed['RR'][1200:], color='blue', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1200:], predictions, color='red', label='Prediksi Curah Hujan')
+            plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
+            plt.xlabel('Tanggal')
+            plt.ylabel('Curah Hujan (mm)')
+            plt.legend()
+            # Menampilkan plot di Streamlit
+            st.pyplot(plt)
+        
     # with tab4:
 
     
