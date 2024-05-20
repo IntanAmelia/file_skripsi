@@ -219,12 +219,17 @@ def main():
         n = 1  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('x_test_hapusdata.csv')
+        df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
+        scaler = MinMaxScaler()
+        scaled_data = scaler.fit_transform(df_imputed[['RR']])
+        scaled_data_df = pd.DataFrame(scaled_data)
+        values = scaled_data_df.values
+        df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_lstm_hapusdata.h5'
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_lstm_hapusdata.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test['x_test_0'][25]  # Menggunakan bagian terakhir dari data testing sebagai x_last_window
-        last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
+        x_last_window = x_test.iloc[-1].values.reshape((1, -1, 1))
         
         for _ in range(n):
             # Predict the next time step
@@ -241,9 +246,17 @@ def main():
         
         # Inverse transform predictions to get the original scale
         future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
-        st.write('Prediksi Selanjutnya : ', future_predictions_denormalisasi)
+        st.write('Prediksi Selanjutnya : ')
+        st.write(future_predictions_denormalisasi)
 
-    
+        # Plotting the predictions
+        plt.figure(figsize=(12, 6))
+        plt.plot(range(len(future_predictions_denormalized)), future_predictions_denormalized, marker='o', color='red', label='Future Predictions')
+        plt.title('Prediksi Curah Hujan Selanjutnya')
+        plt.xlabel('Time Step')
+        plt.ylabel('Curah Hujan (mm)')
+        plt.legend()
+        st.pyplot(plt)
         
 if __name__ == "__main__":
     main()
