@@ -233,13 +233,13 @@ def main():
         
         for _ in range(n):
             # Predict the next time step
-            prediction = model.predict(last_window)
+            prediction = model.predict(x_last_window)
         
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
         
             # Update the last window by removing the first element and appending the prediction
-            last_window = np.append(last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
+            x_last_window = np.append(x_last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
         
         # Convert the list of future predictions to a numpy array
         future_predictions = np.array(future_predictions)
