@@ -215,7 +215,33 @@ def main():
             # Menampilkan plot di Streamlit
             st.pyplot(plt)
         
-    # with tab4:
+    with tab4:
+        n = 1  # Example: Predict the next 10 time steps
+        future_predictions = []
+        x_test = pd.read_csv('x_test_hapusdata.csv')
+        model_path = 'model_lstm_hapusdata.h5'
+        model = tf.keras.models.load_model(model_path)
+        model_path_pathlib = 'model_lstm_hapusdata.h5'
+        model = tf.keras.models.load_model(model_path_pathlib)
+        x_last_window = x_test[-25]  # Menggunakan bagian terakhir dari data testing sebagai x_last_window
+        last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
+        
+        for _ in range(n):
+            # Predict the next time step
+            prediction = model.predict(last_window)
+        
+            # Append the prediction to the list of future predictions
+            future_predictions.append(prediction[0])
+        
+            # Update the last window by removing the first element and appending the prediction
+            last_window = np.append(last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
+        
+        # Convert the list of future predictions to a numpy array
+        future_predictions = np.array(future_predictions)
+        
+        # Inverse transform predictions to get the original scale
+        future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
+        st.write('Prediksi Selanjutnya : ', future_predictions_denormalisasi)
 
     
         
