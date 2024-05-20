@@ -257,6 +257,19 @@ def main():
         plt.ylabel('Curah Hujan (mm)')
         plt.legend()
         st.pyplot(plt)
+
+        # Plotting the combined predictions
+        plt.figure(figsize=(12, 6))
+        plt.plot(df_imputed['Tanggal'], df_imputed['RR'], color='blue', label='Curah Hujan Asli')
+        plt.plot(df_imputed['Tanggal'][-len(predictions):], predictions, color='green', label='Prediksi Curah Hujan')
+        future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
+        plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi Selanjutnya')
+        plt.title('Prediksi Curah Hujan')
+        plt.xlabel('Tanggal')
+        plt.ylabel('Curah Hujan (mm)')
+        plt.legend()
+        # Menampilkan plot di Streamlit
+        st.pyplot(plt)
         
 if __name__ == "__main__":
     main()
