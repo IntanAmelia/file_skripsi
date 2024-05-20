@@ -146,7 +146,7 @@ def main():
         """,unsafe_allow_html=True)
 
         model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
-        if model_hapusdata == 'Imputasi Missing Value':
+        if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             st.write(df_imputed)
