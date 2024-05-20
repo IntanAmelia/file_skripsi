@@ -145,13 +145,13 @@ def main():
         </ol>
         """,unsafe_allow_html=True)
 
-        model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
-        if model_knn == 'Imputasi Missing Value':
+        model_hapusdata = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
+        if model_hapusdata == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             st.write(df_imputed)
 
-        elif model_knn == 'Normalisasi Data':
+        elif model_hapusdata == 'Normalisasi Data':
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
@@ -159,7 +159,7 @@ def main():
             st.write('Data yang telah Dilakukan Proses Normalisasi Data')
             st.write(scaled_data_df)
 
-        elif model_knn == 'Prediksi Menggunakan LSTM':
+        elif model_hapusdata == 'Prediksi Menggunakan LSTM':
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
@@ -187,7 +187,7 @@ def main():
             st.write('RMSE : ')
             st.write(rmse)
 
-        elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
+        elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             # Membuat plot
             df_imputed = pd.read_csv('dataset_imputasi.csv')
             scaler = MinMaxScaler()
