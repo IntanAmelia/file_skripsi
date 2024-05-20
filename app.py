@@ -189,7 +189,7 @@ def main():
 
         elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             # Membuat plot
-            df_imputed = pd.read_csv('dataset_imputasi_hapusdata.csv')
+            df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
