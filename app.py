@@ -64,11 +64,11 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('dataset_imputasi(1).csv')
+            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
-            df_imputed = pd.read_csv('dataset_imputasi(1).csv')
+            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
@@ -76,18 +76,18 @@ def main():
             st.write(scaled_data_df)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
-            df_imputed = pd.read_csv('dataset_imputasi(1).csv')
+            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             
-            model_path = 'model_lstm_knn_s1(1).h5'
+            model_path = 'model_lstm_knn_s1 (1).h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s1(1).h5'
+            model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             
             # Memuat data testing (x_test)
-            x_test = pd.read_csv('x_test(1).csv')
+            x_test = pd.read_csv('x_test (1).csv')
             
             # Melakukan prediksi
             predictions = model.predict(x_test['x_test_0'])
@@ -98,25 +98,25 @@ def main():
             st.write(predictions)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('y_test(1).csv')
+            y_test = pd.read_csv('y_test (1).csv')
             rmse = np.sqrt(np.mean(predictions - y_test)**2)
             st.write('RMSE : ')
             st.write(rmse)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             # Membuat plot
-            df_imputed = pd.read_csv('dataset_imputasi(1).csv')
+            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
             values = scaled_data_df.values
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            model_path = 'model_lstm_knn_s1(1).h5'
+            model_path = 'model_lstm_knn_s1 (1).h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s1(1).h5'
+            model_path_pathlib = 'model_lstm_knn_s (1).h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             # Memuat data testing (x_test)
-            x_test = pd.read_csv('x_test(1).csv')
+            x_test = pd.read_csv('x_test (1).csv')
             # Melakukan prediksi
             predictions = model.predict(x_test['x_test_0'])
             predictions = scaler.inverse_transform(predictions)
