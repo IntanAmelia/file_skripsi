@@ -113,7 +113,7 @@ def main():
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
             model_path = 'model_lstm_knn_s1 (1).h5'
             model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s (1).h5'
+            model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
             model = tf.keras.models.load_model(model_path_pathlib)
             # Memuat data testing (x_test)
             x_test = pd.read_csv('x_test (1).csv')
