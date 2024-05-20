@@ -230,8 +230,8 @@ def main():
         model_path_pathlib = 'model_lstm_hapusdata.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
         # Melakukan prediksi
-        predictions = model.predict(x_test['x_test_0'])
-        predictions = scaler.inverse_transform(predictions)
+        prediksi = model.predict(x_test['x_test_0'])
+        prediksi = scaler.inverse_transform(prediksi)
         x_last_window = x_test.iloc[-1].values.reshape((1, -1, 1))
         
         for _ in range(n):
