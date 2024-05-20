@@ -148,11 +148,11 @@ def main():
         model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('dataset_imputasi_hapusdata.csv')
+            df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
             st.write(df_imputed)
 
         elif model_hapusdata == 'Normalisasi Data':
-            df_imputed = pd.read_csv('dataset_imputasi_hapusdata.csv')
+            df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
@@ -160,7 +160,7 @@ def main():
             st.write(scaled_data_df)
 
         elif model_hapusdata == 'Prediksi Menggunakan LSTM':
-            df_imputed = pd.read_csv('dataset_imputasi_hapusdata.csv')
+            df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             scaled_data_df = pd.DataFrame(scaled_data)
