@@ -108,7 +108,7 @@ def main():
         elif model_hapusdata == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
             df_normalisasi = pd.read_csv('normalisasi.csv')
-            st.write(df_normlisasi)
+            st.write(df_normalisasi)
 
         elif model_hapusdata == 'Prediksi Menggunakan LSTM': 
             # Menampilkan hasil prediksi
