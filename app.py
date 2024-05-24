@@ -56,42 +56,44 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
+            df_imputed = pd.read_csv('imputasi_n_3.csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
-            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
-            scaler = MinMaxScaler()
-            scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            scaled_data_df = pd.DataFrame(scaled_data)
-            st.write('Data yang telah Dilakukan Proses Normalisasi Data')
-            st.write(scaled_data_df)
+            # df_imputed = pd.read_csv('imputasi_n_3.csv')
+            # scaler = MinMaxScaler()
+            # scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            # scaled_data_df = pd.DataFrame(scaled_data)
+            st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
+            df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
+            st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
-            df_imputed = pd.read_csv('dataset_imputasi (1).csv')
-            scaler = MinMaxScaler()
-            scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            scaled_data_df = pd.DataFrame(scaled_data)
+            # df_imputed = pd.read_csv('dataset_imputasi (1).csv')
+            # scaler = MinMaxScaler()
+            # scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            # scaled_data_df = pd.DataFrame(scaled_data)
             
-            model_path = 'model_lstm_knn_s1 (1).h5'
-            model = tf.keras.models.load_model(model_path)
-            model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
-            model = tf.keras.models.load_model(model_path_pathlib)
+            # model_path = 'model_lstm_knn_s1 (1).h5'
+            # model = tf.keras.models.load_model(model_path)
+            # model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
+            # model = tf.keras.models.load_model(model_path_pathlib)
             
-            # Memuat data testing (x_test)
-            x_test = pd.read_csv('x_test (1).csv')
+            # # Memuat data testing (x_test)
+            # x_test = pd.read_csv('x_test (1).csv')
             
-            # Melakukan prediksi
-            predictions = model.predict(x_test['x_test_0'])
-            predictions = scaler.inverse_transform(predictions)
+            # # Melakukan prediksi
+            # predictions = model.predict(x_test['x_test_0'])
+            # predictions = scaler.inverse_transform(predictions)
              
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            st.write(predictions)
+            df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+            st.write(df_prediksi)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('y_test (1).csv')
-            rmse = np.sqrt(np.mean(predictions - y_test)**2)
+            y_test = pd.read_csv('ytest_knn_n_3_epochs_12_lr_0.01_ts_50.csv.csv')
+            rmse = np.sqrt(np.mean(df_prediksi - y_test)**2)
             st.write('RMSE : ')
             st.write(rmse)
 
