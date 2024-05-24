@@ -124,7 +124,6 @@ def main():
 
         elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('hapus_data.csv')
-            df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
             df_normalisasi = pd.read_csv('normalisasi.csv')
             prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_50.csv')
             
