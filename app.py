@@ -52,15 +52,7 @@ def main():
         <h5>Imputasi Missing Value Menggunakan KNN</h5>
         <br>
         """, unsafe_allow_html=True)
-        st.write("""
-        <ol>
-        <li> Imputasi Missing Value </li>
-        <li> Normalisasi Data </li>
-        <li> Prediksi Menggunakan LSTM </li>
-        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi </li>
-        </ol>
-        """,unsafe_allow_html=True)
-
+        
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
@@ -136,15 +128,7 @@ def main():
         <h5>Menghapus Data yang Terdapat Missing Value</h5>
         <br>
         """, unsafe_allow_html=True)
-        st.write("""
-        <ol>
-        <li> Imputasi Missing Value </li>
-        <li> Normalisasi Data </li>
-        <li> Prediksi Menggunakan LSTM </li>
-        <li> Grafik Perbandingan Data Asli dengan Hasil Prediksi </li>
-        </ol>
-        """,unsafe_allow_html=True)
-
+        
         model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
