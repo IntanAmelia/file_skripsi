@@ -85,7 +85,6 @@ def main():
             # # Melakukan prediksi
             # predictions = model.predict(x_test['x_test_0'])
             # predictions = scaler.inverse_transform(predictions)
-            df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
              
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
@@ -94,7 +93,7 @@ def main():
 
             # Menampilkan RMSE
             y_test = pd.read_csv('ytest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
-            rmse = np.sqrt(np.mean(df_normalisasi[1193:] - y_test)**2)
+            rmse = np.sqrt(np.mean(df_prediksi - y_test)**2)
             st.write('RMSE : ')
             st.write(rmse)
 
