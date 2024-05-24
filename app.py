@@ -93,81 +93,51 @@ def main():
             # Menampilkan plot di Streamlit
             st.pyplot(plt)
          
-    # with tab3:
-    #     st.write("""
-    #     <h5>Menghapus Data yang Terdapat Missing Value</h5>
-    #     <br>
-    #     """, unsafe_allow_html=True)
+    with tab3:
+        st.write("""
+        <h5>Menghapus Data yang Terdapat Missing Value</h5>
+        <br>
+        """, unsafe_allow_html=True)
         
-    #     model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
-    #     if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
-    #         st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-    #         df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
-    #         st.write(df_imputed)
+        model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
+        if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
+            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
+            df_imputed = pd.read_csv('hapus_data.csv')
+            st.write(df_imputed)
 
-    #     elif model_hapusdata == 'Normalisasi Data':
-    #         df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
-    #         scaler = MinMaxScaler()
-    #         scaled_data = scaler.fit_transform(df_imputed[['RR']])
-    #         scaled_data_df = pd.DataFrame(scaled_data)
-    #         st.write('Data yang telah Dilakukan Proses Normalisasi Data')
-    #         st.write(scaled_data_df)
+        elif model_hapusdata == 'Normalisasi Data':
+            st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
+            df_normalisasi = pd.read_csv('normalisasi.csv')
+            st.write(df_normlisasi)
 
-    #     elif model_hapusdata == 'Prediksi Menggunakan LSTM':
-    #         df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
-    #         scaler = MinMaxScaler()
-    #         scaled_data = scaler.fit_transform(df_imputed[['RR']])
-    #         scaled_data_df = pd.DataFrame(scaled_data)
-            
-    #         model_path = 'model_lstm_hapusdata.h5'
-    #         model = tf.keras.models.load_model(model_path)
-    #         model_path_pathlib = 'model_lstm_hapusdata.h5'
-    #         model = tf.keras.models.load_model(model_path_pathlib)
-            
-    #         # Memuat data testing (x_test)
-    #         x_test = pd.read_csv('x_test_hapusdata.csv')
-            
-    #         # Melakukan prediksi
-    #         predictions = model.predict(x_test['x_test_0'])
-    #         predictions = scaler.inverse_transform(predictions)
-             
-    #         # Menampilkan hasil prediksi
-    #         st.write("Hasil Prediksi:")
-    #         st.write(predictions)
+        elif model_hapusdata == 'Prediksi Menggunakan LSTM': 
+            # Menampilkan hasil prediksi
+            st.write("Hasil Prediksi:")
+            prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_50.csv')
+            st.write(prediksi)
 
-    #         # Menampilkan RMSE
-    #         y_test = pd.read_csv('y_test_hapusdata.csv')
-    #         rmse = np.sqrt(np.mean(predictions - y_test)**2)
-    #         st.write('RMSE : ')
-    #         st.write(rmse)
+            # Menampilkan RMSE
+            y_test = pd.read_csv('ytest_hapusdata_epochs_12_lr_0.001_ts_50.csv')
+            rmse = np.sqrt(np.mean((prediksi.values - y_test.values)**2))
+            st.write('RMSE : ')
+            st.write(rmse)
 
-    #     elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-    #         # Membuat plot
-    #         df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
-    #         scaler = MinMaxScaler()
-    #         scaled_data = scaler.fit_transform(df_imputed[['RR']])
-    #         scaled_data_df = pd.DataFrame(scaled_data)
-    #         values = scaled_data_df.values
-    #         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-    #         model_path = 'model_lstm_hapusdata.h5'
-    #         model = tf.keras.models.load_model(model_path)
-    #         model_path_pathlib = 'model_lstm_hapusdata.h5'
-    #         model = tf.keras.models.load_model(model_path_pathlib)
-    #         # Memuat data testing (x_test)
-    #         x_test = pd.read_csv('x_test_hapusdata.csv')
-    #         # Melakukan prediksi
-    #         predictions = model.predict(x_test['x_test_0'])
-    #         predictions = scaler.inverse_transform(predictions)
+        elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
+            df_imputed = pd.read_csv('hapus_data.csv')
+            df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
+            df_normalisasi = pd.read_csv('normalisasi.csv')
+            prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_50.csv')
             
-    #         plt.figure(figsize=(20, 7))
-    #         plt.plot(df_imputed['Tanggal'][1013:], df_imputed['RR'][1013:], color='blue', label='Curah Hujan Asli')
-    #         plt.plot(df_imputed['Tanggal'][1013:], predictions, color='red', label='Prediksi Curah Hujan')
-    #         plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
-    #         plt.xlabel('Tanggal')
-    #         plt.ylabel('Curah Hujan (mm)')
-    #         plt.legend()
-    #         # Menampilkan plot di Streamlit
-    #         st.pyplot(plt)
+            plt.figure(figsize=(20, 7))
+            plt.plot(df_imputed['Tanggal'][1013:], df_imputed['RR'][1013:], color='blue', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1013:], df_normalisasi['normalisasi'][1013:], color='green', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1013:], predictions, color='red', label='Prediksi Curah Hujan')
+            plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
+            plt.xlabel('Tanggal')
+            plt.ylabel('Curah Hujan (mm)')
+            plt.legend()
+            # Menampilkan plot di Streamlit
+            st.pyplot(plt)
         
     # with tab4:
     #     n = 1  # Example: Predict the next 10 time steps
