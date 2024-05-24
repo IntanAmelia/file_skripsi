@@ -60,32 +60,11 @@ def main():
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
-            # df_imputed = pd.read_csv('imputasi_n_3.csv')
-            # scaler = MinMaxScaler()
-            # scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            # scaled_data_df = pd.DataFrame(scaled_data)
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
             df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
-            # df_imputed = pd.read_csv('dataset_imputasi (1).csv')
-            # scaler = MinMaxScaler()
-            # scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            # scaled_data_df = pd.DataFrame(scaled_data)
-            
-            # model_path = 'model_lstm_knn_s1 (1).h5'
-            # model = tf.keras.models.load_model(model_path)
-            # model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
-            # model = tf.keras.models.load_model(model_path_pathlib)
-            
-            # # Memuat data testing (x_test)
-            # x_test = pd.read_csv('x_test (1).csv')
-            
-            # # Melakukan prediksi
-            # predictions = model.predict(x_test['x_test_0'])
-            # predictions = scaler.inverse_transform(predictions)
-             
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
             df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
@@ -98,27 +77,15 @@ def main():
             st.write(rmse)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            # Membuat plot
             df_imputed = pd.read_csv('imputasi_n_3.csv')
-            # scaler = MinMaxScaler()
-            # scaled_data = scaler.fit_transform(df_imputed[['RR']])
-            # scaled_data_df = pd.DataFrame(scaled_data)
-            # values = scaled_data_df.values
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            # model_path = 'model_lstm_knn_s1 (1).h5'
-            # model = tf.keras.models.load_model(model_path)
-            # model_path_pathlib = 'model_lstm_knn_s1 (1).h5'
-            # model = tf.keras.models.load_model(model_path_pathlib)
-            # # Memuat data testing (x_test)
-            # x_test = pd.read_csv('x_test (1).csv')
-            # # Melakukan prediksi
-            # predictions = model.predict(x_test['x_test_0'])
-            # predictions = scaler.inverse_transform(predictions)
+            df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
             df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1193:], df_imputed['RR'][1193:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][1193:], df_prediksi['0'], color='red', label='Prediksi Curah Hujan')
+            plt.plot(df_imputed['Tanggal'][1193:], df_normalisasi['normalisasi'], color='green', label='Normalisasi')
+            plt.plot(df_imputed['Tanggal'][1193:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
