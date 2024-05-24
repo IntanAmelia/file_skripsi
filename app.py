@@ -93,7 +93,7 @@ def main():
 
             # Menampilkan RMSE
             y_test = pd.read_csv('ytest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
-            rmse = np.sqrt(np.mean(df_prediksi - y_test)**2)
+            rmse = np.sqrt(np.mean(df_prediksi.values - y_test.values)**2)
             st.write('RMSE : ')
             st.write(rmse)
 
