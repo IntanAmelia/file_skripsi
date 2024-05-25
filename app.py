@@ -130,7 +130,7 @@ def main():
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][999:], df_imputed['RR'][999:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][999:], df_normalisasi['0'][999:], color='green', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][999:], df_normalisasi['0'][999:], color='green', label='Normalisasi')
             plt.plot(df_imputed['Tanggal'][999:], prediksi['0'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan vs Curah Hujan Asli')
             plt.xlabel('Tanggal')
