@@ -153,7 +153,7 @@ def main():
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test.iloc[-1].values.reshape((1, -1, 1))
+        x_last_window = x_test.iloc[-50].values.reshape((1, -1, 1))
         
         for _ in range(n):
             # Predict the next time step
