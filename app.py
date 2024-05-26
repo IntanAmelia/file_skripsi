@@ -139,48 +139,48 @@ def main():
             # Menampilkan plot di Streamlit
             st.pyplot(plt)
         
-    # with tab4:
-    #     n = 1  # Example: Predict the next 10 time steps
-    #     future_predictions = []
-    #     x_test = pd.read_csv('x_test_hapusdata.csv')
-    #     df_imputed = pd.read_csv('dataset_imputasi_hapusdata (1).csv')
-    #     scaler = MinMaxScaler()
-    #     scaled_data = scaler.fit_transform(df_imputed[['RR']])
-    #     scaled_data_df = pd.DataFrame(scaled_data)
-    #     values = scaled_data_df.values
-    #     df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-    #     model_path = 'model_lstm_hapusdata.h5'
-    #     model = tf.keras.models.load_model(model_path)
-    #     model_path_pathlib = 'model_lstm_hapusdata.h5'
-    #     model = tf.keras.models.load_model(model_path_pathlib)
-    #     x_last_window = x_test.iloc[-1].values.reshape((1, -1, 1))
+    with tab4:
+        n = 2  # Example: Predict the next 10 time steps
+        future_predictions = []
+        x_test = pd.read_csv('xtest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+        df_imputed = pd.read_csv('imputasi_n_3.csv')
+        scaler = MinMaxScaler()
+        scaled_data = scaler.fit_transform(df_imputed[['RR']])
+        scaled_data_df = pd.DataFrame(scaled_data)
+        values = scaled_data_df.values
+        df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
+        model_path = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
+        model = tf.keras.models.load_model(model_path)
+        model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
+        model = tf.keras.models.load_model(model_path_pathlib)
+        x_last_window = x_test.iloc[-1].values.reshape((1, -1, 1))
         
-    #     for _ in range(n):
-    #         # Predict the next time step
-    #         prediction = model.predict(x_last_window)
+        for _ in range(n):
+            # Predict the next time step
+            prediction = model.predict(x_last_window)
         
-    #         # Append the prediction to the list of future predictions
-    #         future_predictions.append(prediction[0])
+            # Append the prediction to the list of future predictions
+            future_predictions.append(prediction[0])
         
-    #         # Update the last window by removing the first element and appending the prediction
-    #         x_last_window = np.append(x_last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
+            # Update the last window by removing the first element and appending the prediction
+            x_last_window = np.append(x_last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
         
-    #     # Convert the list of future predictions to a numpy array
-    #     future_predictions = np.array(future_predictions)
+        # Convert the list of future predictions to a numpy array
+        future_predictions = np.array(future_predictions)
         
-    #     # Inverse transform predictions to get the original scale
-    #     future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
-    #     st.write('Prediksi Selanjutnya : ')
-    #     st.write(future_predictions_denormalisasi)
+        # Inverse transform predictions to get the original scale
+        future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
+        st.write('Prediksi Selanjutnya : ')
+        st.write(future_predictions_denormalisasi)
 
-    #     # Plotting the predictions
-    #     plt.figure(figsize=(12, 6))
-    #     plt.plot(range(len(future_predictions_denormalisasi)), future_predictions_denormalisasi, marker='o', color='red', label='Future Predictions')
-    #     plt.title('Prediksi Curah Hujan Selanjutnya')
-    #     plt.xlabel('Time Step')
-    #     plt.ylabel('Curah Hujan (mm)')
-    #     plt.legend()
-    #     st.pyplot(plt)
+        # Plotting the predictions
+        plt.figure(figsize=(12, 6))
+        plt.plot(range(len(future_predictions_denormalisasi)), future_predictions_denormalisasi, marker='o', color='red', label='Future Predictions')
+        plt.title('Prediksi Curah Hujan Selanjutnya')
+        plt.xlabel('Time Step')
+        plt.ylabel('Curah Hujan (mm)')
+        plt.legend()
+        st.pyplot(plt)
         
 if __name__ == "__main__":
     main()
