@@ -153,7 +153,7 @@ def main():
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test[-50]
+        x_last_window = x_test[50]
         last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
         
         for _ in range(n):
