@@ -140,7 +140,7 @@ def main():
             st.pyplot(plt)
         
     with tab4:
-        n = 2  # Example: Predict the next 10 time steps
+        n = 1  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('xtest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
         df_imputed = pd.read_csv('imputasi_n_3.csv')
@@ -153,11 +153,12 @@ def main():
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test.iloc[-50].values.reshape((1, -1, 1))
+        x_last_window = x_test.iloc[-50]
+        last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
         
         for _ in range(n):
             # Predict the next time step
-            prediction = model.predict(x_last_window)
+            prediction = model.predict(last_window)
         
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
