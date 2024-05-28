@@ -153,12 +153,11 @@ def main():
         model = tf.keras.models.load_model(model_path)
         model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path_pathlib)
-        x_last_window = x_test[-50:]
-        last_window = x_last_window.reshape((1, x_last_window.shape[0], x_last_window.shape[1]))
+        x_last_window = np.array(x_test['x_test_0'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
             # Predict the next time step
-            prediction = model.predict(last_window)
+            prediction = model.predict(x_last_window)
         
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
