@@ -178,7 +178,7 @@ def main():
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_prediksi[-50:], label='Prediksi Sebelumnya', color='orange')
         
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
-        plt.plot(future_dates, future_predictions_denormalisasi, marker='o', color='red', label='Prediksi Selanjutnya')
+        plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi Selanjutnya')
         
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Tanggal')
