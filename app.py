@@ -148,6 +148,7 @@ def main():
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
+        df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path)
