@@ -177,7 +177,7 @@ def main():
         plt.figure(figsize=(12, 6))
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR'].iloc[-50:], label='Data Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_prediksi[-50:], label='Prediksi Sebelumnya', color='orange')
-        plt.plot(df_imputed['Tanggal'][1193:], df_normalisasi['normalisasi'][1193:], color='blue', label='Normalisasi')
+        plt.plot(df_imputed['Tanggal'].iloc[-50:], df_normalisasi['normalisasi'][-50:], color='blue', label='Normalisasi')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
         plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi Selanjutnya')
         
