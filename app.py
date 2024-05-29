@@ -140,7 +140,7 @@ def main():
             st.pyplot(plt)
         
     with tab4:
-        n = 1  # Example: Predict the next 10 time steps
+        n = 10  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('xtest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
         df_imputed = pd.read_csv('imputasi_n_3.csv')
@@ -151,8 +151,6 @@ def main():
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path)
-        model_path_pathlib = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
-        model = tf.keras.models.load_model(model_path_pathlib)
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
@@ -175,9 +173,14 @@ def main():
 
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        plt.plot(range(len(future_predictions_denormalisasi)), future_predictions_denormalisasi, marker='o', color='red', label='Future Predictions')
+        plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR'].iloc[-50:], label='Data Asli', color='green')
+        plt.plot(df_imputed['Tanggal'].iloc[-50:], predictions[-50:], label='Prediksi Sebelumnya', color='orange')
+        
+        future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
+        plt.plot(future_dates, future_predictions_denormalisasi, marker='o', color='red', label='Prediksi Selanjutnya')
+        
         plt.title('Prediksi Curah Hujan Selanjutnya')
-        plt.xlabel('Time Step')
+        plt.xlabel('Tanggal')
         plt.ylabel('Curah Hujan (mm)')
         plt.legend()
         st.pyplot(plt)
