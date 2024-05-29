@@ -79,12 +79,10 @@ def main():
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('imputasi_n_3.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
             df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1193:], df_imputed['RR'][1193:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][1193:], df_normalisasi['normalisasi'][1193:], color='green', label='Normalisasi')
             plt.plot(df_imputed['Tanggal'][1193:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
@@ -125,12 +123,10 @@ def main():
         elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('hapus_data.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_normalisasi = pd.read_csv('normalisasi.csv')
             prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_75.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][999:], df_imputed['RR'][999:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][999:], df_normalisasi['normalisasi'][999:], color='green', label='Normalisasi')
             plt.plot(df_imputed['Tanggal'][999:], prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
@@ -177,7 +173,6 @@ def main():
         plt.figure(figsize=(12, 6))
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR'].iloc[-50:], label='Data Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_prediksi[-50:], label='Prediksi Sebelumnya', color='orange')
-        plt.plot(df_imputed['Tanggal'].iloc[-50:], df_normalisasi['normalisasi'][-50:], color='blue', label='Normalisasi')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
         plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi Selanjutnya')
         
