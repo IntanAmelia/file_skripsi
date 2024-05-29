@@ -111,11 +111,11 @@ def main():
         elif model_hapusdata == 'Prediksi Menggunakan LSTM': 
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_75.csv')
+            prediksi = pd.read_csv('predictions_hapusdata_epochs_25_lr_0.01_ts_75.csv')
             st.write(prediksi)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('ytest_hapusdata_epochs_12_lr_0.001_ts_75.csv')
+            y_test = pd.read_csv('ytest_hapusdata_epochs_25_lr_0.01_ts_75.csv')
             rmse = np.sqrt(np.mean((prediksi.values - y_test.values)**2))
             st.write('RMSE : ')
             st.write(rmse)
@@ -123,7 +123,7 @@ def main():
         elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('hapus_data.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            prediksi = pd.read_csv('predictions_hapusdata_epochs_12_lr_0.001_ts_75.csv')
+            prediksi = pd.read_csv('predictions_hapusdata_epochs_25_lr_0.01_ts_75.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][999:], df_imputed['RR'][999:], color='blue', label='Curah Hujan Asli')
