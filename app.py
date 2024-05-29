@@ -56,30 +56,30 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('imputasi_n_3.csv')
+            df_imputed = pd.read_csv('imputasi_n_4.csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
-            df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
+            df_normalisasi = pd.read_csv('normalisasi_n_4.csv')
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
             st.write(df_prediksi)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('ytest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+            y_test = pd.read_csv('ytest_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
             rmse = np.sqrt(np.mean((df_prediksi.values - y_test.values)**2))
             st.write('RMSE : ')
             st.write(rmse)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            df_imputed = pd.read_csv('imputasi_n_3.csv')
+            df_imputed = pd.read_csv('imputasi_n_4.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1193:], df_imputed['RR'][1193:], color='blue', label='Curah Hujan Asli')
