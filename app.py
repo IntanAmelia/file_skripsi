@@ -138,22 +138,25 @@ def main():
     with tab4:
         n = 2  # Example: Predict the next 10 time steps
         future_predictions = []
-        x_test = pd.read_csv('xtest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
-        df_imputed = pd.read_csv('imputasi_n_3.csv')
+        x_test = pd.read_csv('xtest_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
+        df_imputed = pd.read_csv('imputasi_n_4.csv')
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
-        df_normalisasi = pd.read_csv('normalisasi_n_3.csv')
+        df_normalisasi = pd.read_csv('normalisasi_n_4.csv')
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-        model_path = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
+        model_path = 'model_knn_n_4_epochs_25_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path)
-        df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
+        df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
             # Predict the next time step
             prediction = model.predict(x_last_window)
+
+            # Ensure no negative values in prediction
+            prediction = np.maximum(prediction, 0)
         
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
