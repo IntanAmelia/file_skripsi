@@ -151,6 +151,7 @@ def main():
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_knn_n_3_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path)
+        df_prediksi = pd.read_csv('predictions_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
@@ -174,7 +175,7 @@ def main():
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR'].iloc[-50:], label='Data Asli', color='green')
-        plt.plot(df_imputed['Tanggal'].iloc[-50:], predictions[-50:], label='Prediksi Sebelumnya', color='orange')
+        plt.plot(df_imputed['Tanggal'].iloc[-50:], df_prediksi[-50:], label='Prediksi Sebelumnya', color='orange')
         
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
         plt.plot(future_dates, future_predictions_denormalisasi, marker='o', color='red', label='Prediksi Selanjutnya')
