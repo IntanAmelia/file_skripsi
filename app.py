@@ -140,7 +140,7 @@ def main():
             st.pyplot(plt)
         
     with tab4:
-        n = 10  # Example: Predict the next 10 time steps
+        n = 1  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('xtest_knn_n_3_epochs_12_lr_0.01_ts_50.csv')
         df_imputed = pd.read_csv('imputasi_n_3.csv')
