@@ -159,7 +159,7 @@ def main():
             prediction = np.maximum(prediction, 0)
         
             # Append the prediction to the list of future predictions
-            future_predictions.append(prediction[Prediksi])
+            future_predictions.append(prediction[0])
         
             # Update the last window by removing the first element and appending the prediction
             x_last_window = np.append(x_last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
