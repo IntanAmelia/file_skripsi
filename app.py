@@ -169,15 +169,16 @@ def main():
         
         # Inverse transform predictions to get the original scale
         future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
+        future_predictions_df = pd.DataFrame(future_predictions_denormalisasi, columns=['Prediksi'])
         st.write('Prediksi Selanjutnya : ')
-        st.write(future_predictions_denormalisasi)
-
+        st.write(future_predictions_df)
+        
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR'].iloc[-50:], label='Curah Hujan Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_prediksi[-50:], label='Hasil Prediksi', color='orange')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
-        plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi 2 Hari Selanjutnya')
+        plt.plot(future_dates, future_predictions_df, color='red', label='Prediksi 2 Hari Selanjutnya')
         
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Tanggal')
