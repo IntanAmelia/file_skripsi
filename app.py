@@ -73,7 +73,7 @@ def main():
             # Menampilkan RMSE
             y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             epsilon = 1e-10
-            mape = np.mean(np.abs((y_test - predictions)/(y_test + epsilon)))*100
+            mape = np.mean(np.abs((y_test - df_prediksi)/(y_test + epsilon)))*100
             st.write('MAPE : ')
             st.write(mape)
 
