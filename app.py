@@ -82,8 +82,8 @@ def main():
             df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             
             plt.figure(figsize=(20, 7))
-            plt.plot(df_imputed['Tanggal'][1193:], df_imputed['RR'][1193:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][1193:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
+            plt.plot(df_imputed['Tanggal'][1023:], df_imputed['RR'][1023:], color='blue', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1023:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
