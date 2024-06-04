@@ -72,9 +72,10 @@ def main():
 
             # Menampilkan RMSE
             y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
-            rmse = np.sqrt(np.mean((df_prediksi.values - y_test.values)**2))
-            st.write('RMSE : ')
-            st.write(rmse)
+            epsilon = 1e-10
+            mape = np.mean(np.abs((y_test - predictions)/(y_test + epsilon)))*100
+            st.write('MAPE : ')
+            st.write(mape)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
