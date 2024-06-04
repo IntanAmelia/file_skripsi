@@ -69,11 +69,13 @@ def main():
             st.write("Hasil Prediksi:")
             df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             st.write(df_prediksi)
-
+            df_prediksi_de = scaler.inverse_transform(df_prediksi)
+            
             # Menampilkan RMSE
             y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+            y_test_de = scaler.inverse_transform(y_test)
             epsilon = 1e-10
-            mape = np.mean(np.abs((y_test - df_prediksi)/(y_test + epsilon)))*100
+            mape = np.mean(np.abs((y_test_de - df_prediksi_de)/(y_test_de + epsilon)))*100
             st.write('MAPE : ')
             st.write(mape)
 
