@@ -65,6 +65,9 @@ def main():
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
+            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
+            scaler = MinMaxScaler()
+            scaled_data = scaler.fit_transform(df_imputed[['RR']])
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
             df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
