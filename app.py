@@ -27,7 +27,7 @@ def main():
 )
     st.title('PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE')
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Hapus Data yang terdapat Missing Value", "Prediksi Selanjutnya"])
+    tab1, tab2, tab3 = st.tabs(["Data Understanding", "Imputasi Missing Value Menggunakan KNN", "Prediksi Selanjutnya"])
     
     with tab1:
         st.write("""
@@ -56,30 +56,30 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('imputasi_n_4.csv')
+            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
-            df_normalisasi = pd.read_csv('normalisasi_n_4.csv')
+            df_normalisasi = pd.read_csv('fix_normalisasi_n_3.csv')
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             st.write(df_prediksi)
 
             # Menampilkan RMSE
-            y_test = pd.read_csv('ytest_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
+            y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             rmse = np.sqrt(np.mean((df_prediksi.values - y_test.values)**2))
             st.write('RMSE : ')
             st.write(rmse)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            df_imputed = pd.read_csv('imputasi_n_4.csv')
+            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1193:], df_imputed['RR'][1193:], color='blue', label='Curah Hujan Asli')
@@ -92,63 +92,19 @@ def main():
             st.pyplot(plt)
          
     with tab3:
-        st.write("""
-        <h5>Menghapus Data yang Terdapat Missing Value</h5>
-        <br>
-        """, unsafe_allow_html=True)
-        
-        model_hapusdata = st.radio("Pemodelan", ('Hapus Data yang Terdapat Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
-        if model_hapusdata == 'Hapus Data yang Terdapat Missing Value':
-            st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('hapus_data.csv')
-            st.write(df_imputed)
-
-        elif model_hapusdata == 'Normalisasi Data':
-            st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
-            df_normalisasi = pd.read_csv('normalisasi.csv')
-            st.write(df_normalisasi)
-
-        elif model_hapusdata == 'Prediksi Menggunakan LSTM': 
-            # Menampilkan hasil prediksi
-            st.write("Hasil Prediksi:")
-            prediksi = pd.read_csv('predictions_hapusdata_epochs_25_lr_0.01_ts_75.csv')
-            st.write(prediksi)
-
-            # Menampilkan RMSE
-            y_test = pd.read_csv('ytest_hapusdata_epochs_25_lr_0.01_ts_75.csv')
-            rmse = np.sqrt(np.mean((prediksi.values - y_test.values)**2))
-            st.write('RMSE : ')
-            st.write(rmse)
-
-        elif model_hapusdata == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            df_imputed = pd.read_csv('hapus_data.csv')
-            df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            prediksi = pd.read_csv('predictions_hapusdata_epochs_25_lr_0.01_ts_75.csv')
-            
-            plt.figure(figsize=(20, 7))
-            plt.plot(df_imputed['Tanggal'][999:], df_imputed['RR'][999:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][999:], prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
-            plt.title('Prediksi Curah Hujan')
-            plt.xlabel('Tanggal')
-            plt.ylabel('Curah Hujan (mm)')
-            plt.legend()
-            # Menampilkan plot di Streamlit
-            st.pyplot(plt)
-        
-    with tab4:
         n = 2  # Example: Predict the next 10 time steps
         future_predictions = []
-        x_test = pd.read_csv('xtest_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
-        df_imputed = pd.read_csv('imputasi_n_4.csv')
+        x_test = pd.read_csv('fix_xtest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+        df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
-        df_normalisasi = pd.read_csv('normalisasi_n_4.csv')
+        df_normalisasi = pd.read_csv('fix_normalisasi_n_3.csv')
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-        model_path = 'model_knn_n_4_epochs_25_lr_0.01_ts_50.h5'
+        model_path = 'fix_model_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.h5'
         model = tf.keras.models.load_model(model_path)
-        df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_25_lr_0.01_ts_50.csv')
+        df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
