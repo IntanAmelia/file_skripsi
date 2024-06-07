@@ -74,13 +74,15 @@ def main():
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
             
-            # Menampilkan RMSE
+            # Menampilkan MAPE
             y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
-            y_test_de = scaler.inverse_transform(y_test)
-            epsilon = 1e-10
-            mape = np.mean(np.abs((y_test_de - df_prediksi_de)/(y_test_de + epsilon)))*100
+            y_test = scaler.inverse_transform(y_test.reshape(-1, 1))
+            epsilon = 1e-5
+            mask = y_test != 0
+            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
+            nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
-            st.write(mape)
+            st.write(nilai_mape_uji)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
