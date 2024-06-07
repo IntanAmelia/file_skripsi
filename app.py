@@ -76,7 +76,7 @@ def main():
             
             # Menampilkan MAPE
             y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
-            y_test = scaler.inverse_transform(y_test.reshape(-1, 1))
+            y_test = scaler.inverse_transform(y_test)
             epsilon = 1e-5
             mask = y_test != 0
             nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
