@@ -76,16 +76,15 @@ def main():
             df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             df_prediksi = df_prediksi.round(2)
             st.write(df_prediksi)
-            df_prediksi_de = scaler.inverse_transform(df_prediksi.reshape(-1, 1))
-            df_prediksi_de = df_prediksi_de.round(2)
+            # df_prediksi_de = scaler.inverse_transform(df_prediksi.reshape(-1, 1))
+            # df_prediksi_de = df_prediksi_de.round(2)
             
             # Menampilkan MAPE
-            y_test = pd.read_csv('ytest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
-            y_test = scaler.inverse_transform(y_test)
+            y_test = pd.read_csv('ytestuji_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             y_test = y_test.round(2)
             epsilon = 1e-6
             mask = y_test != 0
-            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
+            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi[mask]) / (y_test[mask] + epsilon))) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
             st.write(nilai_mape_uji)
