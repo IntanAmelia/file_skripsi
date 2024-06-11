@@ -78,6 +78,7 @@ def main():
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
             df_prediksi_de = df_prediksi_de.round(2)
+            st.write(df_prediksi_de)
             
             # Menampilkan MAPE
             y_test = pd.read_csv('ytest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
