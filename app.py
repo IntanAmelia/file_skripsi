@@ -85,7 +85,7 @@ def main():
             y_test = y_test.round(2)
             epsilon = 1e-6
             mask = y_test != 0
-            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi[mask]) / (y_test[mask] + epsilon))) * 100
+            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
             st.write(nilai_mape_uji)
