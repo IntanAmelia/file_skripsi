@@ -98,8 +98,8 @@ def main():
             df_prediksi = df_prediksi.round(2)
             
             plt.figure(figsize=(20, 7))
-            plt.plot(df_imputed['Tanggal'][1363:], df_imputed['RR'][1363:], color='blue', label='Curah Hujan Asli')
-            plt.plot(df_imputed['Tanggal'][1363:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
+            plt.plot(df_imputed['Tanggal'][1364:], df_imputed['RR'][1364:], color='blue', label='Curah Hujan Asli')
+            plt.plot(df_imputed['Tanggal'][1364:], df_prediksi['prediksi'], color='red', label='Prediksi Curah Hujan')
             plt.title('Prediksi Curah Hujan')
             plt.xlabel('Tanggal')
             plt.ylabel('Curah Hujan (mm)')
