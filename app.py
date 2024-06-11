@@ -56,26 +56,26 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
+            df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
-            df_normalisasi = pd.read_csv('fix_normalisasi_n_3.csv')
+            df_normalisasi = pd.read_csv('normalisasi_n_5_akhir.csv')
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
-            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
+            df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
             
             # Menampilkan MAPE
-            y_test = pd.read_csv('fix_ytest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+            y_test = pd.read_csv('ytest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             y_test = scaler.inverse_transform(y_test)
             epsilon = 1e-5
             mask = y_test != 0
@@ -85,9 +85,9 @@ def main():
             st.write(nilai_mape_uji)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
+            df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1023:], df_imputed['RR'][1023:], color='blue', label='Curah Hujan Asli')
@@ -102,17 +102,17 @@ def main():
     with tab3:
         n = 2  # Example: Predict the next 10 time steps
         future_predictions = []
-        x_test = pd.read_csv('fix_xtest_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
-        df_imputed = pd.read_csv('fix_imputasi_n_3.csv')
+        x_test = pd.read_csv('xtest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
+        df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
-        df_normalisasi = pd.read_csv('fix_normalisasi_n_3.csv')
+        df_normalisasi = pd.read_csv('normalisasi_n_5_akhir.csv')
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-        model_path = 'fix_model_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.h5'
+        model_path = 'model_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.h5'
         model = tf.keras.models.load_model(model_path)
-        df_prediksi = pd.read_csv('fix_predictions_knn_n_3_splitdata_0.6_epochs_12_lr_0.01_ts_50.csv')
+        df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
