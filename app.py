@@ -57,27 +57,33 @@ def main():
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
+            df_imputed = df_imputed.round(2)
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
             df_normalisasi = pd.read_csv('normalisasi_n_5_akhir.csv')
+            df_normalisasi = df_normalisasi.round(2)
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
             df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
+            df_imputed = df_imputed.round(2)
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
             df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
+            df_prediksi = df_prediksi.round(2)
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
+            df_prediksi_de = df_prediksi_de.round(2)
             
             # Menampilkan MAPE
             y_test = pd.read_csv('ytest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
             y_test = scaler.inverse_transform(y_test)
-            epsilon = 1e-5
+            y_test = y_test.round(2)
+            epsilon = 1e-6
             mask = y_test != 0
             nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
@@ -86,8 +92,10 @@ def main():
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
             df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
+            df_imputed = df_imputed.round(2)
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
             df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
+            df_prediksi = df_prediksi.round(2)
             
             plt.figure(figsize=(20, 7))
             plt.plot(df_imputed['Tanggal'][1023:], df_imputed['RR'][1023:], color='blue', label='Curah Hujan Asli')
@@ -103,16 +111,20 @@ def main():
         n = 2  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('xtest_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
+        x_test = x_test.round(2)
         df_imputed = pd.read_csv('imputasi_n_5_akhir.csv')
+        df_imputed = df_imputed.round(2)
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
         df_normalisasi = pd.read_csv('normalisasi_n_5_akhir.csv')
+        df_normalisasi = df_normalisasi.round(2)
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.h5'
         model = tf.keras.models.load_model(model_path)
         df_prediksi = pd.read_csv('predictions_knn_n_5_splitdata_0.8_epochs_50_lr_0.01_ts_50_akhir.csv')
+        df_prediksi = df_prediksi.round(2)
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
         for _ in range(n):
@@ -130,9 +142,11 @@ def main():
         
         # Convert the list of future predictions to a numpy array
         future_predictions = np.array(future_predictions)
+        future_predictions = future_predictions.round(2)
         
         # Inverse transform predictions to get the original scale
         future_predictions_denormalisasi = scaler.inverse_transform(future_predictions)
+        future_predictions_denormalisasi = future_predictions_denormalisasi.round(2)
         future_predictions_df = pd.DataFrame(future_predictions_denormalisasi, columns=['Prediksi'])
         st.write('Prediksi Selanjutnya : ')
         st.write(future_predictions_df)
