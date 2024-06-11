@@ -80,7 +80,7 @@ def main():
             df_prediksi_de = df_prediksi_de.round(2)
             
             # Menampilkan MAPE
-            y_test = pd.read_csv('ytest.csv')
+            y_test = pd.read_csv('ytestuji.csv')
             y_test = scaler.inverse_transform(y_test)
             y_test = y_test.round(2)
             epsilon = 1e-6
