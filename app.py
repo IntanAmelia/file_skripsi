@@ -92,7 +92,7 @@ def main():
             df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
+            df_prediksi = pd.read_csv('predictions_fix.csv')
             df_prediksi = df_prediksi.round(2)
             
             plt.figure(figsize=(20, 7))
