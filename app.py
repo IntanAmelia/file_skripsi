@@ -56,24 +56,24 @@ def main():
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
-            df_imputed = pd.read_csv('imputasi.csv')
+            df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
             st.write(df_imputed)
 
         elif model_knn == 'Normalisasi Data':
             st.write('Data yang telah Dilakukan Proses Normalisasi Data :')
-            df_normalisasi = pd.read_csv('normalisasi.csv')
+            df_normalisasi = pd.read_csv('normalisasi_n_4_fix.csv')
             df_normalisasi = df_normalisasi.round(2)
             st.write(df_normalisasi)
 
         elif model_knn == 'Prediksi Menggunakan LSTM':
-            df_imputed = pd.read_csv('imputasi.csv')
+            df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            df_prediksi = pd.read_csv('predictions.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
             df_prediksi = df_prediksi.round(2)
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
@@ -83,18 +83,16 @@ def main():
             y_test = pd.read_csv('ytestuji.csv')
             y_test = scaler.inverse_transform(y_test)
             y_test = y_test.round(2)
-            epsilon = 1e-6
-            mask = y_test != 0
             nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
             st.write(nilai_mape_uji)
 
         elif model_knn == 'Grafik Perbandingan Data Asli dengan Hasil Prediksi':
-            df_imputed = pd.read_csv('imputasi.csv')
+            df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
             df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-            df_prediksi = pd.read_csv('predictions.csv')
+            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
             df_prediksi = df_prediksi.round(2)
             
             plt.figure(figsize=(20, 7))
@@ -131,9 +129,6 @@ def main():
             # Predict the next time step
             prediction = model.predict(x_last_window)
 
-            # Ensure no negative values in prediction
-            prediction = np.maximum(prediction, 0)
-        
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
         
