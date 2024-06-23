@@ -71,6 +71,8 @@ def main():
             df_imputed = df_imputed.round(2)
             scaler = MinMaxScaler()
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
+            values = scaled_data
+            training_data_len = math.ceil(len(values) * 0.7)
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
             df_prediksi = pd.read_csv('predictions_fix.csv')
@@ -80,10 +82,8 @@ def main():
             df_prediksi_de = df_prediksi_de.round(2)
             
             # Menampilkan MAPE
-            y_test = pd.read_csv('ytestuji.csv')
-            y_test = scaler.inverse_transform(y_test)
-            y_test = y_test.round(2)
-            nilai_mape_uji = np.mean(np.abs((y_test[mask] - df_prediksi_de[mask]) / (y_test[mask] + epsilon))) * 100
+            y_test = pd.read_csv('interpolasi_n_4_splitdata_0.7_epochs_50_lr_0.01_ts_50.csv')
+            nilai_mape_uji = np.mean(np.abs((df_imputed['RR'][training_data_len:] - ytest[training_data_len:]) / df_imputed['RR'][training_data_len:])) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
             st.write(nilai_mape_uji)
