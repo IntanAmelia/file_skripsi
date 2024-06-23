@@ -73,7 +73,7 @@ def main():
             scaled_data = scaler.fit_transform(df_imputed[['RR']])
             # Menampilkan hasil prediksi
             st.write("Hasil Prediksi:")
-            df_prediksi = pd.read_csv('predictions_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
+            df_prediksi = pd.read_csv('predictions_fix.csv')
             df_prediksi = df_prediksi.round(2)
             st.write(df_prediksi)
             df_prediksi_de = scaler.inverse_transform(df_prediksi)
