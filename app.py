@@ -83,7 +83,7 @@ def main():
             
             # Menampilkan MAPE
             y_test = pd.read_csv('interpolasi_n_4_splitdata_0.7_epochs_50_lr_0.01_ts_50.csv')
-            nilai_mape_uji = np.mean(np.abs((df_imputed['RR'][training_data_len:] - ytest['RR'][training_data_len:]) / df_imputed['RR'][training_data_len:])) * 100
+            nilai_mape_uji = np.mean(np.abs((df_imputed['RR'][training_data_len:] - y_test['RR'][training_data_len:]) / df_imputed['RR'][training_data_len:])) * 100
             nilai_mape_uji = nilai_mape_uji.round(2)
             st.write('MAPE : ')
             st.write(nilai_mape_uji)
