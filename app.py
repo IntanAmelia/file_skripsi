@@ -121,7 +121,7 @@ def main():
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
         model_path = 'model_knn_n_4_epochs_50_lr_0.01_ts_50_fix.h5'
         model = tf.keras.models.load_model(model_path)
-        df_prediksi = pd.read_csv('predictions.csv')
+        df_prediksi = pd.read_csv('predictions_fix.csv')
         df_prediksi = df_prediksi.round(2)
         x_last_window = np.array(x_test['x_test'].values[-50:], dtype=np.float32).reshape((1, 50, 1))
         
