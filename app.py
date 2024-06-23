@@ -108,18 +108,18 @@ def main():
     with tab3:
         n = 2  # Example: Predict the next 10 time steps
         future_predictions = []
-        x_test = pd.read_csv('xtest.csv')
+        x_test = pd.read_csv('xtest_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
         x_test = x_test.round(2)
-        df_imputed = pd.read_csv('imputasi.csv')
+        df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
         df_imputed = df_imputed.round(2)
         scaler = MinMaxScaler()
         scaled_data = scaler.fit_transform(df_imputed[['RR']])
         scaled_data_df = pd.DataFrame(scaled_data)
         values = scaled_data_df.values
-        df_normalisasi = pd.read_csv('normalisasi.csv')
+        df_normalisasi = pd.read_csv('normalisasi_n_4_fix.csv')
         df_normalisasi = df_normalisasi.round(2)
         df_imputed['Tanggal'] = pd.to_datetime(df_imputed['Tanggal'])
-        model_path = 'model.h5'
+        model_path = 'model_knn_n_4_epochs_50_lr_0.01_ts_50_fix.h5'
         model = tf.keras.models.load_model(model_path)
         df_prediksi = pd.read_csv('predictions.csv')
         df_prediksi = df_prediksi.round(2)
