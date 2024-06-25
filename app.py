@@ -175,9 +175,8 @@ elif menu == "Prediksi LSTM":
                 idx_in_test = idx - training_data_len + time_steps
                 if idx_in_test < len(test_predictions):
                     full_series[idx] = test_predictions[idx_in_test]
-
-       # Inverse transform to get actual values
-       interpolated_data = scaler.inverse_transform(full_series)
+        # Inverse transform to get actual values
+        interpolated_data = scaler.inverse_transform(full_series)
 
         # Insert interpolated values back into the dataframe
         data_interpolated = df_imputed.copy()
