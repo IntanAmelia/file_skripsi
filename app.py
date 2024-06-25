@@ -106,6 +106,7 @@ elif menu == "Model LSTM":
         learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
         time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=100, value=25)
         split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
+        st.session_state.time_steps = time_steps
         # Interpolating outliers
         valid_indices = df_imputed[~df_imputed['Outlier']].index
         data_valid = df_imputed.loc[valid_indices]
@@ -156,7 +157,7 @@ elif menu == "Model LSTM":
     else:
         st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None:
+    if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None st.session_state.time_steps is not None:
         train_predictions = st.session_state.model.predict(st.session_state.x_train)
         train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
@@ -167,28 +168,28 @@ elif menu == "Prediksi LSTM":
         
         # Reconstruct the complete series with LSTM interpolations
         full_series = np.copy(st.session_state.scaled_data)
-        outlier_indices = df_imputed[df_imputed['Outlier']].index
+        outlier_indices = st.session_state.df_imputed[st.session_state.df_imputed['Outlier']].index
         # Interpolating outliers in training data and test data using LSTM predictions
-        all_outlier_indices = [idx for idx in outlier_indices if idx >= time_steps]
+        all_outlier_indices = [idx for idx in outlier_indices if idx >= st.session_state.time_steps]
         for idx in all_outlier_indices:
-            if idx < training_data_len:
-                full_series[idx] = train_predictions[idx - time_steps]
+            if idx < st.session_state.training_data_len:
+                full_series[idx] = train_predictions[idx - st.session_state.time_steps]
             else:
-                idx_in_test = idx - training_data_len + time_steps
+                idx_in_test = idx - st.session_state.training_data_len + st.session_state.time_steps
                 if idx_in_test < len(test_predictions):
                     full_series[idx] = test_predictions[idx_in_test]
         # Inverse transform to get actual values
-        interpolated_data = scaler.inverse_transform(full_series)
+        interpolated_data = st.session_state.scaler.inverse_transform(full_series)
 
         # Insert interpolated values back into the dataframe
-        data_interpolated = df_imputed.copy()
+        data_interpolated = st.session_state.df_imputed.copy()
         data_interpolated['RR_Imputed'] = interpolated_data
         st.write('Hasil Prediksi :')
         st.write(data_interpolated)
 
         # Menghitung MAPE untuk interpolasi data latih dan data uji
-        interpolated_mape_train = np.mean(np.abs((df_imputed['RR_Imputed'][:training_data_len] - data_interpolated['RR_Imputed'][:training_data_len]) / df_imputed['RR_Imputed'][:training_data_len])) * 100
-        interpolated_mape_test = np.mean(np.abs((df_imputed['RR_Imputed'][training_data_len:] - data_interpolated['RR_Imputed'][training_data_len:]) / df_imputed['RR_Imputed'][training_data_len:])) * 100
+        interpolated_mape_train = np.mean(np.abs((st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len] - data_interpolated['RR_Imputed'][:st.session_state.training_data_len]) / st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len])) * 100
+        interpolated_mape_test = np.mean(np.abs((st.session_state.df_imputed['RR_Imputed'][st.session_state.training_data_len:] - data_interpolated['RR_Imputed'][st.session_state.training_data_len:]) / st.session_state.df_imputed['RR_Imputed'][st.session_state.training_data_len:])) * 100
         st.write('MAPE Data Pelatihan')
         st.write(interpolated_mape_train)
         st.write('MAPE Data Uji')
