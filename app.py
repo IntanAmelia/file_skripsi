@@ -164,9 +164,10 @@ elif menu == "Prediksi LSTM":
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_pelatihan = pd.DataFrame(train_predictions_data, columns=['Hasil Prediksi Data Pelatihan'])
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
-        data_prediksi = pd.DataFrame(test_predictions_data['Hasil Prediksi Data Pelatihan'], data_prediksi_uji['Hasil Prediksi Data Uji'])
-        st.write('Hasil Prediksi :')
-        st.write(data_prediksi)
+        st.write('Hasil Prediksi Data Pelatihan:')
+        st.write(data_prediksi_pelatihan)
+        st.write('Hasil Prediksi Data Uji:')
+        st.write(data_prediksi_uji)
         
         # Reconstruct the complete series with LSTM interpolations
         full_series = np.copy(st.session_state.scaled_data)
