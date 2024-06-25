@@ -27,8 +27,6 @@ st.title("PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING 
 # Add a sidebar title
 st.sidebar.title("Main Menu")
 
-# Add a sidebar header and multiple menu items
-st.sidebar.header("Navigation")
 menu = st.sidebar.radio("Go to", ["Dataset", "Imputasi Missing Value Menggunakan KNN", "Deteksi Outlier", "Normalisasi Data", "Model LSTM", "Prediksi LSTM", "Implementasi"])
 
 if 'df' not in st.session_state:
