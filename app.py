@@ -109,7 +109,7 @@ elif menu == "Model LSTM":
         valid_indices = df_imputed[~df_imputed['Outlier']].index
         data_valid = df_imputed.loc[valid_indices]
         # Scale valid data for prediction
-        scaled_valid_data = st.session_state.scalerscaler.transform(data_valid[['RR']])
+        scaled_valid_data = st.session_state.scalerscaler.transform(data_valid[['RR_Imputed']])
 
         # Pembagian data
         values = scaled_valid_data
