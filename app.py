@@ -29,12 +29,40 @@ st.sidebar.title("Main Menu")
 
 # Add a sidebar header and multiple menu items
 st.sidebar.header("Navigation")
-menu = st.sidebar.radio("Go to", ["Imputasi Missing Value Menggunakan KNN", "Deteksi Outlier", "Normalisasi Data", "Model LSTM", "Prediksi LSTM", "Implementasi"])
+menu = st.sidebar.radio("Go to", ["Dataset", "Imputasi Missing Value Menggunakan KNN", "Deteksi Outlier", "Normalisasi Data", "Model LSTM", "Prediksi LSTM", "Implementasi"])
 
 # Add different sections based on the selected menu item
-if menu == "Imputasi Missing Value Menggunakan KNN":
-    st.header("Welcome to the Home Page")
-    st.write("This is the main area of the Home page.")
+if menu == "Dataset":
+    st.write("""
+    <h5>Data Understanding</h5>
+    <br>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    Link Dataset:
+    https://dataonline.bmkg.go.id
+    """, unsafe_allow_html=True)
+
+
+    st.write('Dataset ini berisi tentang curah hujan')
+    missing_values = ['8888']
+    df = pd.read_excel('Dataset_Curah_Hujan.xlsx', na_values = missing_values)
+    st.write("Dataset Curah Hujan : ")
+    st.write(df)
+elif menu == "Imputasi Missing Value Menggunakan KNN":
+    missing_values = ['8888']
+    df = pd.read_excel('Dataset_Curah_Hujan.xlsx', na_values = missing_values)
+    missing_data = df[df.isna().any(axis=1)]
+    st.write('Data yang Mempunyai Missing Value :')
+    st.write(missing_data)
+    k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", [3, 4, 5])
+    preprocessing = KNNImputer(n_neighbors=k)
+    data_imputed = preprocessing.fit_transform(df[['RR']])
+    df_imputed = df.copy()
+    df_imputed['RR_Imputed'] = data_imputed
+    df_comparison = df_imputed[['Tanggal', 'RR', 'RR_Imputed']]
+    st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
+    st.write(df_comparison)
 elif menu == "Deteksi Outlier":
     st.header("About Us")
     st.write("This section contains information about us.")
@@ -51,5 +79,3 @@ elif menu == "Implementasi":
     st.header("Contact Us")
     st.write("Get in touch with us here.")
     
-# Display a message in the main area
-st.write("This is the main area of the app.")
