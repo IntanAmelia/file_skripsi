@@ -63,7 +63,7 @@ def main():
             k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", ["3", "4", "5"])
             preprocessing = KNNImputer(n_neighbors=int(k))
             data_imputasi = preprocessing.fit_transform(missing_data[['RR']])
-            data = pd.DataFrame(data_imputasi)
+            data = pd.DataFrame(data_imputasi, columns=missing_data['RR'])
             st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
             st.write(data)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
