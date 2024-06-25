@@ -114,7 +114,7 @@ elif menu == "Model LSTM":
         # Pembagian data
         values = scaled_valid_data
         training_data_len = math.ceil(len(values) * split_data)
-        train_data = scaled_data[0:training_data_len, :]
+        train_data = scaled_valid_data[0:training_data_len, :]
 
         x_train = []
         y_train = []
@@ -126,7 +126,7 @@ elif menu == "Model LSTM":
         x_train, y_train = np.array(x_train), np.array(y_train)
         x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
-        test_data = scaled_data[training_data_len - time_steps:, :]
+        test_data = scaled_valid_data[training_data_len - time_steps:, :]
         x_test = []
         y_test = []
 
@@ -154,7 +154,7 @@ elif menu == "Model LSTM":
     else:
         st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None:
+    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None:
         test_predictions = model.predict(x_test)
         test_predictions_data = scaler.inverse_transform(test_predictions)
         st.write('Hasil Prediksi :')
