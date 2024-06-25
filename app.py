@@ -162,9 +162,11 @@ elif menu == "Prediksi LSTM":
         train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
-        data_prediksi = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi'])
-        # st.write('Hasil Prediksi :')
-        # st.write(data_prediksi)
+        data_prediksi_pelatihan pd.DataFrame(train_predictions_data, columns=['Hasil Prediksi Data Pelatihan']
+        data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
+        data_prediksi = pd.DataFrame(test_predictions_data, data_prediksi_uji)
+        st.write('Hasil Prediksi :')
+        st.write(data_prediksi)
         
         # Reconstruct the complete series with LSTM interpolations
         full_series = np.copy(st.session_state.scaled_data)
@@ -184,8 +186,6 @@ elif menu == "Prediksi LSTM":
         # Insert interpolated values back into the dataframe
         data_interpolated = st.session_state.df_imputed.copy()
         data_interpolated['RR_Imputed'] = interpolated_data
-        st.write('Hasil Prediksi :')
-        st.write(data_interpolated)
 
         # Menghitung MAPE untuk interpolasi data latih dan data uji
         interpolated_mape_train = np.mean(np.abs((st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len] - data_interpolated['RR_Imputed'][:st.session_state.training_data_len]) / st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len])) * 100
