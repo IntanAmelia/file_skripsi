@@ -93,18 +93,22 @@ elif menu == "Normalisasi Data":
         st.write('Silahkan masukkan dataset terlebih dahulu')
 elif menu == "Model LSTM":
     df_imputed = st.session_state.df_imputed
-    scaler = st.session_state.scaler
-    if df_imputed is not None and scaler is not None:
-        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=25)
-        learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
-        time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=100, value=25)
-        split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
-        st.session_state.time_steps = time_steps
+scaler = st.session_state.scaler
+
+if df_imputed is not None and scaler is not None:
+    epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=25)
+    learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01, format="%.4f")
+    time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=100, value=25)
+    split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
+    st.session_state.time_steps = time_steps
+
+    if st.button('Simpan'):
         # Interpolating outliers
         valid_indices = df_imputed[~df_imputed['Outlier']].index
         data_valid = df_imputed.loc[valid_indices]
+
         # Scale valid data for prediction
-        scaled_valid_data = st.session_state.scaler.transform(data_valid[['RR_Imputed']])
+        scaled_valid_data = scaler.transform(data_valid[['RR_Imputed']])
 
         # Pembagian data
         values = scaled_valid_data
@@ -136,6 +140,7 @@ elif menu == "Model LSTM":
         st.session_state.x_test = x_test
         st.session_state.y_train = y_train
         st.session_state.y_test = y_test
+
         def build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate):
             model = Sequential()
             model.add(LSTM(100, return_sequences=True, input_shape=(x_train.shape[1], 1)))
@@ -146,9 +151,11 @@ elif menu == "Model LSTM":
             model.fit(x_train, y_train, batch_size=32, epochs=epochs, verbose=1)
             st.session_state.model = model
             return model
+
         model = build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate)
-    else:
-        st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
+        st.write("Model telah disimpan dan dilatih.")
+else:
+    st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
         train_predictions = st.session_state.model.predict(st.session_state.x_train)
