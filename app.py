@@ -60,11 +60,14 @@ def main():
             missing_data = df[df.isna().any(axis=1)]
             st.write('Data yang Mempunyai Missing Value :')
             st.write(missing_data)
-            k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", ["3", "4", "5"])
+            k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", [3, 4, 5])
+            preprocessing = KNNImputer(n_neighbors=k)
             preprocessing = KNNImputer(n_neighbors=int(k))
-            df[['RR']] = preprocessing.fit_transform(df[['RR']])
+            data_imputed = preprocessing.fit_transform(df[['RR']])
+            df_imputed = df.copy()
+            df_imputed['RR_Imputed'] = data_imputed
             st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
-            st.write(df)
+            st.write(data_imputed)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
