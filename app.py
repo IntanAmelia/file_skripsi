@@ -162,7 +162,7 @@ elif menu == "Prediksi LSTM":
         train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
-        data_prediksi_pelatihan pd.DataFrame(train_predictions_data, columns=['Hasil Prediksi Data Pelatihan']
+        data_prediksi_pelatihan = pd.DataFrame(train_predictions_data, columns=['Hasil Prediksi Data Pelatihan']
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         data_prediksi = pd.DataFrame(test_predictions_data, data_prediksi_uji)
         st.write('Hasil Prediksi :')
