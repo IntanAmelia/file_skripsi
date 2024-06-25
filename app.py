@@ -220,7 +220,7 @@ elif menu == "Implementasi":
     if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 7, 14, 30, 180, 356])
         future_predictions = []
-        x_last_window = np.array(x_test[-50:], dtype=np.float32).reshape((1, 50, 1))
+        x_last_window = np.array(x_test[50:], dtype=np.float32).reshape((1, 50, 1))
         for _ in range(n):
             # Predict the next time step
             prediction = model.predict(x_last_window)
