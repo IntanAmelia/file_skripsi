@@ -219,7 +219,7 @@ elif menu == "Implementasi":
     data_prediksi_uji = st.session_state.data_prediksi_uji
     time_steps = st.session_state.time_steps
     if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None:
-        n = st.selectbox("Pilih prediksi selanjutnya :", [1, 7, 14, 30, 180, 356])
+        n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 356])
         future_predictions = []
         x_last_window = np.array(x_test[-time_steps:], dtype=np.float32).reshape((1, -1, 1))
         for _ in range(n):
@@ -247,7 +247,7 @@ elif menu == "Implementasi":
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR_Imputed'].iloc[-50:], label='Curah Hujan Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], data_prediksi_uji[-50:], label='Hasil Prediksi', color='orange')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
-        plt.plot(future_dates, future_predictions_df, color='red', label='Prediksi Selanjutnya')
+        plt.plot(future_dates, future_predictions_df, color='red', 'ro', label='Prediksi Selanjutnya')
             
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Tanggal')
