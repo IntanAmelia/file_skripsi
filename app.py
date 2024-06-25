@@ -217,10 +217,11 @@ elif menu == "Implementasi":
     scaler = st.session_state.scaler
     df_imputed = st.session_state.df_imputed
     data_prediksi_uji = st.session_state.data_prediksi_uji
-    if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None:
+    time_steps = st.session_state.time_steps
+    if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 7, 14, 30, 180, 356])
         future_predictions = []
-        x_last_window = np.array(x_test[50:], dtype=np.float32).reshape((1, 50, 1))
+        x_last_window = np.array(x_test[-time_steps:], dtype=np.float32).reshape((1, -1, 1))
         for _ in range(n):
             # Predict the next time step
             prediction = model.predict(x_last_window)
