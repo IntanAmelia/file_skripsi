@@ -156,7 +156,7 @@ elif menu == "Model LSTM":
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None:
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
-        test_predictions_data = scaler.inverse_transform(test_predictions)
+        test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         st.write('Hasil Prediksi :')
         st.write(test_predictions_data)
 elif menu == "Implementasi":
