@@ -247,7 +247,7 @@ elif menu == "Implementasi":
         plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR_Imputed'].iloc[-50:], label='Curah Hujan Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], data_prediksi_uji[-50:], label='Hasil Prediksi', color='orange')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
-        plt.plot(future_dates, future_predictions_df, color='red', label='Prediksi 2 Hari Selanjutnya')
+        plt.plot(future_dates, future_predictions_df, color='red', label='Prediksi Selanjutnya')
             
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Tanggal')
