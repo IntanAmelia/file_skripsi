@@ -191,11 +191,12 @@ elif menu == "Prediksi LSTM":
         
         st.write('Hasil Prediksi Data Pelatihan:')
         st.write(data_prediksi_pelatihan)
+        st.write('MAPE Data Pelatihan')
         st.write(interpolated_mape_train)
-        st.write('MAPE Data Uji')
-        st.write(interpolated_mape_test)
         st.write('Hasil Prediksi Data Uji:')
-        st.write(data_prediksi_uji)st.write('MAPE Data Pelatihan')
+        st.write(data_prediksi_uji)
+        st.write('MAPE Data Uji')
+        st.write(interpolated_mape_test)        
     else:
         st.write('Silahkan bangun model terlebih dahulu')
 elif menu == "Implementasi":
