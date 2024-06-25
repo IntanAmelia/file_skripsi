@@ -103,7 +103,7 @@ elif menu == "Model LSTM":
     if df_imputed is not None and scaler is not None:
         epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=25)
         learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
-        time_step = st.number_input("Masukkan nilai time step:", min_value=25, max_value=100, value=25)
+        time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=100, value=25)
         split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
         # Interpolating outliers
         valid_indices = df_imputed[~df_imputed['Outlier']].index
