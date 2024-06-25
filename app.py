@@ -92,7 +92,8 @@ elif menu == "Normalisasi Data":
         scaled_data = scaler.fit_transform(df_imputed[['RR_Imputed']])
         df_imputed['Normalisasi'] = scaled_data
         df_normalisasi = df_imputed[['RR_Imputed','Normalisasi']]
-        st.session_state.scaled_data = df_imputed
+        st.session_state.df_imputed = df_imputed
+        st.session_state.scaled_data = scaled_data
         st.write('Data setelah dilakukan normalisasi :')
         st.write(df_normalisasi)
     else:
@@ -114,6 +115,7 @@ elif menu == "Model LSTM":
         # Pembagian data
         values = scaled_valid_data
         training_data_len = math.ceil(len(values) * split_data)
+        st.session_state.trainind_data_len = training_data_len
         train_data = scaled_valid_data[0:training_data_len, :]
 
         x_train = []
@@ -154,17 +156,17 @@ elif menu == "Model LSTM":
     else:
         st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None:
+    if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st_session_state.training_data_len is not None:
         train_predictions = st.session_state.model.predict(st.session_state.x_train)
         train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi'])
-        st.write('Hasil Prediksi :')
-        st.write(data_prediksi)
+        # st.write('Hasil Prediksi :')
+        # st.write(data_prediksi)
         
         # Reconstruct the complete series with LSTM interpolations
-        full_series = np.copy(scaled_data)
+        full_series = np.copy(st.session_state.scaled_data)
         outlier_indices = df_imputed[df_imputed['Outlier']].index
         # Interpolating outliers in training data and test data using LSTM predictions
         all_outlier_indices = [idx for idx in outlier_indices if idx >= time_steps]
@@ -180,11 +182,19 @@ elif menu == "Prediksi LSTM":
 
         # Insert interpolated values back into the dataframe
         data_interpolated = df_imputed.copy()
-        data_interpolated['RR'] = interpolated_data
+        data_interpolated['RR_Imputed'] = interpolated_data
+        st.write('Hasil Prediksi :')
+        st.write(data_interpolated)
 
         # Menghitung MAPE untuk interpolasi data latih dan data uji
-        interpolated_mape_train = np.mean(np.abs((df_imputed['RR'][:training_data_len] - data_interpolated['RR'][:training_data_len]) / df_imputed['RR'][:training_data_len])) * 100
-        interpolated_mape_test = np.mean(np.abs((df_imputed['RR'][training_data_len:] - data_interpolated['RR'][training_data_len:]) / df_imputed['RR'][training_data_len:])) * 100
+        interpolated_mape_train = np.mean(np.abs((df_imputed['RR_Imputed'][:training_data_len] - data_interpolated['RR_Imputed'][:training_data_len]) / df_imputed['RR_Imputed'][:training_data_len])) * 100
+        interpolated_mape_test = np.mean(np.abs((df_imputed['RR_Imputed'][training_data_len:] - data_interpolated['RR_Imputed'][training_data_len:]) / df_imputed['RR_Imputed'][training_data_len:])) * 100
+        st.write('MAPE Data Pelatihan')
+        st.write(interpolated_mape_train)
+        st.write('MAPE Data Uji')
+        st.write(interpolated_mape_test)
+    else:
+        st.write('Silahkan bangun model terlebih dahulu')
 elif menu == "Implementasi":
     st.header("Contact Us")
     st.write("Get in touch with us here.")
