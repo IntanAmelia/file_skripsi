@@ -115,7 +115,7 @@ elif menu == "Model LSTM":
         # Pembagian data
         values = scaled_valid_data
         training_data_len = math.ceil(len(values) * split_data)
-        st.session_state.trainind_data_len = training_data_len
+        st.session_state.training_data_len = training_data_len
         train_data = scaled_valid_data[0:training_data_len, :]
 
         x_train = []
