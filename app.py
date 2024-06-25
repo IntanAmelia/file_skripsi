@@ -148,9 +148,9 @@ elif menu == "Model LSTM":
             optimizer = Adam(learning_rate=learning_rate)
             model.compile(optimizer=optimizer, loss='mean_squared_error')
             model.fit(x_train, y_train, batch_size=32, epochs=epochs, verbose=1)
+            st.session_state.model = model
             return model
         model = build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate)
-        st.session_state.model = model
     else:
         st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
