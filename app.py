@@ -155,12 +155,37 @@ elif menu == "Model LSTM":
         st.write('SIlahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None:
+        train_predictions = st.session_state.model.predict(st.session_state.x_train)
+        train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
-        #test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions.reshape(-1, 1)).flatten()
         data_prediksi = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi'])
         st.write('Hasil Prediksi :')
         st.write(data_prediksi)
+        
+        # Reconstruct the complete series with LSTM interpolations
+        full_series = np.copy(scaled_data)
+        outlier_indices = df_imputed[df_imputed['Outlier']].index
+        # Interpolating outliers in training data and test data using LSTM predictions
+        all_outlier_indices = [idx for idx in outlier_indices if idx >= time_steps]
+        for idx in all_outlier_indices:
+            if idx < training_data_len:
+                full_series[idx] = train_predictions[idx - time_steps]
+            else:
+                idx_in_test = idx - training_data_len + time_steps
+                if idx_in_test < len(test_predictions):
+                    full_series[idx] = test_predictions[idx_in_test]
+
+       # Inverse transform to get actual values
+       interpolated_data = scaler.inverse_transform(full_series)
+
+        # Insert interpolated values back into the dataframe
+        data_interpolated = df_imputed.copy()
+        data_interpolated['RR'] = interpolated_data
+
+        # Menghitung MAPE untuk interpolasi data latih dan data uji
+        interpolated_mape_train = np.mean(np.abs((df_imputed['RR'][:training_data_len] - data_interpolated['RR'][:training_data_len]) / df_imputed['RR'][:training_data_len])) * 100
+        interpolated_mape_test = np.mean(np.abs((df_imputed['RR'][training_data_len:] - data_interpolated['RR'][training_data_len:]) / df_imputed['RR'][training_data_len:])) * 100
 elif menu == "Implementasi":
     st.header("Contact Us")
     st.write("Get in touch with us here.")
