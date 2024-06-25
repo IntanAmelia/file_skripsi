@@ -66,6 +66,7 @@ def main():
             data_imputed = preprocessing.fit_transform(df[['RR']])
             df_imputed = df.copy()
             df_imputed['RR_Imputed'] = data_imputed
+            df_comparison = df_imputed[['Tanggal', 'RR', 'RR_Imputed']]
             st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
             st.write(data_imputed)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
