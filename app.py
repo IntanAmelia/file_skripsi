@@ -89,8 +89,9 @@ elif menu == "Normalisasi Data":
     if df_imputed is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         scaled_data = scaler.fit_transform(df_imputed[['RR_Imputed']])
-        df_normalisasi = pd.DataFrame(scaled_data)
-        st.session_state.scaled_data = scaled_data
+        df_imputed['Normalisasi'] = scaled_data
+        df_normalisasi = df_imputed[['RR_Imputed','Normalisasi']]
+        st.session_state.scaled_data = df_normalisasi
         st.write('Data setelah dilakukan normalisasi :')
         st.write(df_normalisasi)
     else:
