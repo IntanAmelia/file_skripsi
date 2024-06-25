@@ -64,7 +64,7 @@ def main():
             preprocessing = KNNImputer(n_neighbors=int(k))
             data_imputasi = preprocessing.fit_transform(df[['RR']])
             data = pd.DataFrame(data_imputasi, columns=df['RR'])
-            df_imputed = data.drop(df['RR'], axis=1).join(data)
+            df_imputed = data.drop(df['RR'], axis=1).join(df['Tanggal'],data)
             st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
             st.write(df_imputed)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
