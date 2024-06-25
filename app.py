@@ -196,7 +196,17 @@ elif menu == "Prediksi LSTM":
         st.write('Hasil Prediksi Data Uji:')
         st.write(data_prediksi_uji)
         st.write('MAPE Data Uji')
-        st.write(interpolated_mape_test)        
+        st.write(interpolated_mape_test)
+        
+        plt.figure(figsize=(20, 7))
+        plt.plot(st.session_state.df_imputed['Tanggal'], st.session_state.df_imputed['RR_Imputed'], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df_imputed['Tanggal'][st.session_state.training_data_len:], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
+        plt.title('Prediksi Curah Hujan')
+        plt.xlabel('Tanggal')
+        plt.ylabel('Curah Hujan (mm)')
+        plt.legend()
+        # Menampilkan plot di Streamlit
+        st.pyplot(plt)
     else:
         st.write('Silahkan bangun model terlebih dahulu')
 elif menu == "Implementasi":
