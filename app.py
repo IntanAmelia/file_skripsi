@@ -68,7 +68,7 @@ def main():
             df_imputed['RR_Imputed'] = data_imputed
             df_comparison = df_imputed[['Tanggal', 'RR', 'RR_Imputed']]
             st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
-            st.write(data_imputed)
+            st.write(df_comparison)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
