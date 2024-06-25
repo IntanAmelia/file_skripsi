@@ -1,7 +1,28 @@
+# app.py
+#import library
+
+import pickle
 import streamlit as st
+import pandas as pd
+import numpy as np
+import keras
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import seaborn as sns
+import math
+import joblib
+import tensorflow as tf
+from keras.optimizers import Adam
+from keras.models import Sequential
+from keras.layers import Dense, LSTM, Dropout
+from keras.models import load_model
 
 # Set the title of the app
-st.title("Comprehensive Streamlit App with Sidebar")
+st.title("PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE")
 
 # Add a sidebar title
 st.sidebar.title("Main Menu")
