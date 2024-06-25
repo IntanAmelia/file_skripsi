@@ -81,7 +81,7 @@ elif menu == "Deteksi Outlier":
         df_imputed['Outlier'] = outliers
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
-        st.write(df_imputed)
+        st.dataframe(df_imputed.style.format({'Outlier': '{0}'}))
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
