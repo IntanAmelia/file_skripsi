@@ -85,8 +85,16 @@ elif menu == "Deteksi Outlier":
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
-    st.header("Settings")
-    st.write("Configure your preferences here.")
+    df_imputed = st.session_state.df_imputed
+    if df_imputed is not None:
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        scaled_data = scaler.fit_transform(df_imputed[['RR']])
+        df_normalisasi = pd.DataFrame(scaled_data)
+        st.session_state.scaled_data = scaled_data
+        st.write('Data setelah dilakukan normalisasi :')
+        st.write(df_normalisasi)
+    else:
+        st.write('Silahkan masukkan dataset terlebih dahulu')
 elif menu == "Model LSTM":
     st.header("Contact Us")
     st.write("Get in touch with us here.")
