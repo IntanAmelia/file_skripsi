@@ -55,6 +55,11 @@ def main():
         
         model_knn = st.radio("Pemodelan", ('Imputasi Missing Value', 'Normalisasi Data', 'Prediksi Menggunakan LSTM', 'Grafik Perbandingan Data Asli dengan Hasil Prediksi'))
         if model_knn == 'Imputasi Missing Value':
+            missing_values = ['8888']
+            df = pd.read_excel('Dataset_Curah_Hujan.xlsx', na_values = missing_values)
+            missing_data = df[df.isna().any(axis=1)]
+            st.write('Data yang Mempunyai Missing Value :')
+            st.write(missing_data)
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
