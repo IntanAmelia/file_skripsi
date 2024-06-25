@@ -62,7 +62,7 @@ def main():
             st.write(missing_data)
             k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", ["3", "4", "5"])
             preprocessing = KNNImputer(n_neighbors=int(k))
-            data_imputasi = preprocessing.fit_transform(df['RR'])
+            data_imputasi = preprocessing.fit_transform(df[['RR']])
             st.write('Dataset yang telah Dilakukan Proses Imputasi Missing Value :')
             df_imputed = pd.read_csv('imputasi_n_4_fix.csv')
             df_imputed = df_imputed.round(2)
@@ -114,7 +114,7 @@ def main():
             st.pyplot(plt)
          
     with tab3:
-        n = 2  # Example: Predict the next 10 time steps
+        n = 356  # Example: Predict the next 10 time steps
         future_predictions = []
         x_test = pd.read_csv('xtest_knn_n_4_epochs_50_lr_0.01_ts_50_fix.csv')
         x_test = x_test.round(2)
