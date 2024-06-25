@@ -46,7 +46,7 @@ if menu == "Dataset":
     """, unsafe_allow_html=True)
 
 
-    st.write('Dataset ini berisi tentang curah hujan')
+    st.write('Dataset ini berisi data tentang curah hujan. Dataset yang digunakan pada penelitian ini berasal dari website https://dataonline.bmkg.go.id berdasarkan hasil pengamatan Badan Meteorologi, Klimatologi, dan Geofisika Stasiun Meteorologi Maritim Tanjung Perak dari 1 Januari 2019 hingga 31 Agustus 2023.')
     missing_values = ['8888']
     df = pd.read_excel('Dataset_Curah_Hujan.xlsx', na_values = missing_values)
     df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
