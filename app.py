@@ -200,7 +200,7 @@ elif menu == "Prediksi LSTM":
         
         plt.figure(figsize=(20, 7))
         plt.plot(st.session_state.df_imputed['Tanggal'], st.session_state.df_imputed['RR_Imputed'], color='blue', label='Curah Hujan Asli')
-        plt.plot(st.session_state.df_imputed['Tanggal'].iloc[-len(data_prediksi_uji)], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
+        plt.plot(st.session_state.df_imputed['Tanggal'][-len(data_prediksi_uji)], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
         plt.ylabel('Curah Hujan (mm)')
