@@ -11,6 +11,7 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_percentage_error
 import matplotlib.pyplot as plt
 import seaborn as sns
 import math
@@ -174,49 +175,19 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
-        train_predictions = st.session_state.model.predict(st.session_state.x_train)
-        train_predictions_data = st.session_state.scaler.inverse_transform(train_predictions)
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
-        data_prediksi_pelatihan = pd.DataFrame(train_predictions_data, columns=['Hasil Prediksi Data Pelatihan'])
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
-        
-        # Reconstruct the complete series with LSTM interpolations
-        full_series = np.copy(st.session_state.scaled_data)
-        outlier_indices = st.session_state.df_imputed[st.session_state.df_imputed['Outlier']].index
-        # Interpolating outliers in training data and test data using LSTM predictions
-        all_outlier_indices = [idx for idx in outlier_indices if idx >= st.session_state.time_steps]
-        for idx in all_outlier_indices:
-            if idx < st.session_state.training_data_len:
-                full_series[idx] = train_predictions[idx - st.session_state.time_steps]
-            else:
-                idx_in_test = idx - st.session_state.training_data_len + st.session_state.time_steps
-                if idx_in_test < len(test_predictions):
-                    full_series[idx] = test_predictions[idx_in_test]
-        # Inverse transform to get actual values
-        interpolated_data = st.session_state.scaler.inverse_transform(full_series)
-
-        # Insert interpolated values back into the dataframe
-        data_interpolated = st.session_state.df_imputed.copy()
-        data_interpolated['RR_Imputed'] = interpolated_data
-
-        # Menghitung MAPE untuk interpolasi data latih dan data uji
-        interpolated_mape_train = np.mean(np.abs((st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len] - data_interpolated['RR_Imputed'][:st.session_state.training_data_len]) / st.session_state.df_imputed['RR_Imputed'][:st.session_state.training_data_len])) * 100
-        interpolated_mape_test = np.mean(np.abs((st.session_state.df_imputed['RR_Imputed'][st.session_state.training_data_len:] - data_interpolated['RR_Imputed'][st.session_state.training_data_len:]) / st.session_state.df_imputed['RR_Imputed'][st.session_state.training_data_len:])) * 100
-        
-        
-        st.write('Hasil Prediksi Data Pelatihan:')
-        st.write(data_prediksi_pelatihan)
-        st.write('MAPE Data Pelatihan')
-        st.write(interpolated_mape_train)
+        y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.reshape(-1, 1))
+        mape_test = mean_absolute_percentage_error(y_test_scaler, test_predictions_data)*100
         st.write('Hasil Prediksi Data Uji:')
         st.write(data_prediksi_uji)
         st.write('MAPE Data Uji')
-        st.write(interpolated_mape_test)
+        st.write(mape_test)
         
         plt.figure(figsize=(20, 7))
-        plt.plot(st.session_state.df_imputed['Tanggal'], st.session_state.df_imputed['RR_Imputed'], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df_imputed['Tanggal'][-len(st.session_state.x_test):], y_test_scaler, color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df_imputed['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
