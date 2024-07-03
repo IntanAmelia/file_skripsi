@@ -81,6 +81,35 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
         st.dataframe(df_imputed[['interpolasi', 'Outlier']])
+        def replace_outliers_with_interpolation(data, threshold=3):
+            Q1 = data.quantile(0.25)
+            Q3 = data.quantile(0.75)
+            IQR = Q3 - Q1
+            is_outlier_iqr = (data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))
+            outliers = is_outlier_iqr
+        
+        
+            # Create a copy of the data
+            data_cleaned = data.copy()
+        
+            # Replace outliers with linear interpolation values
+            for i, is_outlier in enumerate(outliers):
+                if is_outlier:
+                    if i == 0:
+                        # If the first element is an outlier, replace it with the next value
+                        data_cleaned[i] = data.iloc[i+1]
+                    elif i == len(data) - 1:
+                        # If the last element is an outlier, replace it with the previous value
+                        data_cleaned[i] = data.iloc[i-1]
+                    else:
+                        # For other elements, replace with linear interpolation
+                        data_cleaned[i] = (data.iloc[i-1] + data.iloc[i+1]) / 2
+        
+            return data_cleaned
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        st.session_state.df_imputed = df_imputed
+        st.write('Dataset yang termasuk outlier :')
+        st.dataframe(df_imputed[['interpolasi', 'Outlier']])
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
