@@ -107,6 +107,15 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
         
             return data_cleaned
         cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
+        cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
         st.dataframe(df_imputed[['interpolasi', 'Outlier']])
