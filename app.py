@@ -105,7 +105,7 @@ elif menu == "Normalisasi Data":
     if df_imputed is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
-        scaled_data = scaler.fit_transform(df_imputed['interpolasi outlier'])
+        scaled_data = scaler.fit_transform(df_imputed['interpolasi outlier'].reshape(-1,1)
         df_imputed['Normalisasi'] = scaled_data
         df_normalisasi = df_imputed[['interpolasi outlier','Normalisasi']]
         st.session_state.df_imputed = df_imputed
