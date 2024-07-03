@@ -186,7 +186,7 @@ elif menu == "Prediksi LSTM":
         st.write(data_prediksi_uji)
         st.write('MAPE Data Uji')
         st.write(mape_test)
-        
+        st.write(y_test_scaler)
         plt.figure(figsize=(20, 7))
         plt.plot(st.session_state.df_imputed['Tanggal'][-len(st.session_state.x_test):], y_test_scaler, color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df_imputed['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
