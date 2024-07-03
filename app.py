@@ -86,14 +86,14 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
             if is_outlier:
                 if i == 0:
                     # If the first element is an outlier, replace it with the next value
-                    df_imputed[i] = df_imputed['interpolasi'].iloc[i+1]
+                    df_imputed['interpolasi outlier'][i] = df_imputed['interpolasi'].iloc[i+1]
                 elif i == len(df_imputed['interpolasi']) - 1:
                     # If the last element is an outlier, replace it with the previous value
-                    df_imputed[i] = df_imputed['interpolasi'].iloc[i-1]
+                    df_imputed['interpolasi outlier'][i] = df_imputed['interpolasi'].iloc[i-1]
                 else:
                     # For other elements, replace with linear interpolation
-                    df_imputed[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
-        st.session_state.data_cleaned = data_cleaned
+                    df_imputed['interpolasi outlier'][i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
+        st.session_state.df_imputed = df_imputed
         st.write('Data setelah dilakukan interpolasi :')
         st.dataframe(data_cleaned)
     else:
