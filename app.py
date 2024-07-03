@@ -94,7 +94,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
                 else:
                     # For other elements, replace with linear interpolation
                     data_cleaned[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
-        df_imputed['interpolasi outlier'] = data_cleaned
+        df_imputed['interpolasi outlier'] = data_cleaned.copy()
         st.session_state.df_imputed = df_imputed
         st.write('Data setelah dilakukan interpolasi :')
         st.dataframe(df_imputed['interpolasi outlier'])
