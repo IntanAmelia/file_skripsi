@@ -233,8 +233,8 @@ elif menu == "Implementasi":
             
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        plt.plot(df_imputed['Tanggal'].iloc[-50:], y_test_scaler[-50:], label='Curah Hujan Asli', color='green')
-        plt.plot(df_imputed['Tanggal'].iloc[-50:], data_prediksi_uji[-50:], label='Hasil Prediksi', color='orange')
+        plt.plot(df_imputed['Tanggal'].iloc[-150:], y_test_scaler[-150:], label='Curah Hujan Asli', color='green')
+        plt.plot(df_imputed['Tanggal'].iloc[-150:], data_prediksi_uji[-150:], label='Hasil Prediksi', color='orange')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
         if n == 1:
             plt.plot(future_dates, future_predictions_df, 'ro', label='Prediksi Selanjutnya')
