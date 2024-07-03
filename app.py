@@ -67,7 +67,7 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
 elif menu == "Deteksi Outlier Menggunakan IQR":
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
-        Q1 = df_imputed['RR'].quantile(0.25)
+        Q1 = df_imputed['RR'].values.quantile(0.25)
         Q3 = df_imputed['RR'].quantile(0.75)
         IQR = Q3 - Q1
         is_outlier_iqr = (df_imputed['RR'] < (Q1 - 1.5 * IQR)) | (df_imputed['RR'] > (Q3 + 1.5 * IQR))
