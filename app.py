@@ -200,15 +200,17 @@ elif menu == "Prediksi LSTM":
         st.write('Silahkan bangun model terlebih dahulu')
 elif menu == "Implementasi":
     x_test = st.session_state.x_test
+    y_test = st.session_state.y_test
     model = st.session_state.model
     scaler = st.session_state.scaler
     df_imputed = st.session_state.df_imputed
     data_prediksi_uji = st.session_state.data_prediksi_uji
     time_steps = st.session_state.time_steps
-    if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None:
+    if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 356])
         future_predictions = []
         x_last_window = np.array(x_test[-time_steps:], dtype=np.float32).reshape((1, -1, 1))
+        y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.reshape(-1, 1))
         for _ in range(n):
             # Predict the next time step
             prediction = model.predict(x_last_window)
@@ -231,7 +233,7 @@ elif menu == "Implementasi":
             
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        plt.plot(df_imputed['Tanggal'].iloc[-50:], df_imputed['RR_Imputed'].iloc[-50:], label='Curah Hujan Asli', color='green')
+        plt.plot(df_imputed['Tanggal'].iloc[-50:], y_test_scaler.iloc[-50:], label='Curah Hujan Asli', color='green')
         plt.plot(df_imputed['Tanggal'].iloc[-50:], data_prediksi_uji[-50:], label='Hasil Prediksi', color='orange')
         future_dates = pd.date_range(start=df_imputed['Tanggal'].iloc[-1], periods=n+1, closed='right')
         if n == 1:
