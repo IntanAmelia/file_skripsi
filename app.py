@@ -88,7 +88,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
             Q3 = data.quantile(0.75)
             IQR = Q3 - Q1
             is_outlier_iqr = (data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))
-            outliers = is_outlier_iqr
+            data_outlier = is_outlier_iqr
             data_outlier['outlier'] = outliers
         
         
