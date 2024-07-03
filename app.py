@@ -64,14 +64,14 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
         st.write(df_comparison)
     else:
         st.write("Silahkan masukkan dataset terlebih dahulu.")
-elif menu == "Deteksi Outlier":
+elif menu == "Deteksi Outlier Menggunakan IQR":
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
-        mean_rainfall = df_imputed['RR'].mean()
-        std_rainfall = df_imputed['RR'].std()
-        threshold = 3 * std_rainfall
-        outliers = np.abs(df_imputed['RR_Imputed'] - mean_rainfall) > threshold
-        df_imputed['Outlier'] = outliers
+        Q1 = df_imputed['RR'].quantile(0.25)
+        Q3 = df_imputed['RR'].quantile(0.75)
+        IQR = Q3 - Q1
+        is_outlier_iqr = (df_imputed['RR'] < (Q1 - 1.5 * IQR)) | (df_imputed['RR'] > (Q3 + 1.5 * IQR))
+        df_imputed['Outlier'] = is_outlier_iqr
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
         st.dataframe(df_imputed.style.format({'Outlier': '{0}'}))
