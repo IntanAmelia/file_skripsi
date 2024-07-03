@@ -157,9 +157,9 @@ elif menu == "Model LSTM":
     
             def build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate):
                 model = Sequential()
-                model.add(LSTM(100, return_sequences=True, input_shape=(x_train.shape[1], 1)))
+                model.add(LSTM(100, name='lstm_layer_1', return_sequences=True, input_shape=(x_train.shape[1], 1)))
                 model.add(Dropout(0.5))
-                model.add(LSTM(100))
+                model.add(LSTM(100, name='lstm_layer_2'))
                 model.add(Dropout(0.5))
                 model.add(Dense(1))
                 optimizer = Adam(learning_rate=learning_rate)
