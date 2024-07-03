@@ -117,8 +117,8 @@ elif menu == "Normalisasi Data":
 elif menu == "Model LSTM":
     df_imputed = st.session_state.df_imputed
     scaler = st.session_state.scaler
-
-    if df_imputed is not None and scaler is not None:
+    scaled_data = st.session_state.scaled_data
+    if df_imputed is not None and scaler is not None and scaled_data is not None:
         epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=25)
         learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01, format="%.4f")
         time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=75, value=25)
