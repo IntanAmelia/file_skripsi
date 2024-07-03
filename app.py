@@ -65,6 +65,7 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
     else:
         st.write("Silahkan masukkan dataset terlebih dahulu.")
 elif menu == "Deteksi Outlier Menggunakan IQR":
+    st.write('Dataset yang termasuk outlier :')
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
         Q1 = df_imputed['RR_Imputed'].quantile(0.25)
