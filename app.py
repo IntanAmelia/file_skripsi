@@ -74,7 +74,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
         df_imputed['Outlier'] = is_outlier_iqr
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
-        st.dataframe(df_imputed)
+        st.dataframe(Q1)
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
