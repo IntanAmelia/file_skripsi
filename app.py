@@ -87,7 +87,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
                 if i == 0:
                     # If the first element is an outlier, replace it with the next value
                     data_cleaned[i] = df_imputed['interpolasi'].iloc[i+1]
-                elif i == len(data) - 1:
+                elif i == len(df_imputed['interpolasi']) - 1:
                     # If the last element is an outlier, replace it with the previous value
                     data_cleaned[i] = df_imputed['interpolasi'].iloc[i-1]
                 else:
