@@ -88,7 +88,8 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
             IQR = Q3 - Q1
             is_outlier_iqr = (data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))
             outliers = is_outlier_iqr
-            data['outlier'] = outliers
+            data_outlier = data.copy()
+            data_outlier['outlier'] = outliers
         
         
             # Create a copy of the data
@@ -107,7 +108,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
                         # For other elements, replace with linear interpolation
                         data_cleaned[i] = (data.iloc[i-1] + data.iloc[i+1]) / 2
         
-            return data_cleaned, data['outlier']
+            return data_cleaned, data_outlier['outlier']
         cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
         cleaned_data_2 = replace_outliers_with_interpolation(cleaned_data)
         cleaned_data_3 = replace_outliers_with_interpolation(cleaned_data_2)
