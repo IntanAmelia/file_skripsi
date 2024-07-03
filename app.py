@@ -110,7 +110,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
         
             return data_cleaned, data_outlier['outlier']
         cleaned_data = replace_outliers_with_interpolation(df_imputed['interpolasi'])
-        cleaned_data_2 = replace_outliers_with_interpolation(cleaned_data)
+        cleaned_data_2 = replace_outliers_with_interpolation(pd.Series(cleaned_data))
         cleaned_data_3 = replace_outliers_with_interpolation(cleaned_data_2.values)
         cleaned_data_4 = replace_outliers_with_interpolation(cleaned_data_3.values)
         cleaned_data_5 = replace_outliers_with_interpolation(cleaned_data_4.values)
