@@ -67,7 +67,7 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
 elif menu == "Deteksi Outlier Menggunakan IQR":
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
-        series = pd.Series(data_imputasi_df['RR_Imputed'])
+        series = pd.Series(df_imputed['RR_Imputed'])
         series_interpolated = series.replace(0, np.nan).interpolate(method='linear')
         df_imputed['interpolasi'] = series_interpolated
         st.write('Interpolasi Data 0 :')
