@@ -121,7 +121,7 @@ elif menu == "Model LSTM":
     scaled_data = st.session_state.scaled_data
     if df_imputed is not None and scaler is not None and scaled_data is not None:
         epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=12)
-        learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01, format="%.4f")
+        learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
         time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=75, value=25)
         split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
         st.session_state.time_steps = time_steps
