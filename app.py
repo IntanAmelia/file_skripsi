@@ -120,7 +120,7 @@ elif menu == "Model LSTM":
     scaler = st.session_state.scaler
     scaled_data = st.session_state.scaled_data
     if df_imputed is not None and scaler is not None and scaled_data is not None:
-        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=25)
+        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=12)
         learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01, format="%.4f")
         time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=75, value=25)
         split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
@@ -186,7 +186,6 @@ elif menu == "Prediksi LSTM":
         st.write(data_prediksi_uji)
         st.write('MAPE Data Uji')
         st.write(mape_test)
-        st.write(y_test_scaler)
         plt.figure(figsize=(20, 7))
         plt.plot(st.session_state.df_imputed['Tanggal'][-len(st.session_state.x_test):], y_test_scaler, color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df_imputed['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
