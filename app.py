@@ -95,7 +95,7 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
                     df_imputed[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
         st.session_state.df_imputed = df_imputed
         st.write('Data setelah dilakukan interpolasi :')
-        st.dataframe(data_cleaned)
+        st.dataframe(df_imputed)
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
