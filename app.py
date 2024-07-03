@@ -67,15 +67,20 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
 elif menu == "Deteksi Outlier Menggunakan IQR":
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
-        Q1 = df_imputed['RR_Imputed'].quantile(0.25)
-        Q3 = df_imputed['RR_Imputed'].quantile(0.75)
+        series = pd.Series(data_imputasi_df['RR_Imputed'])
+        series_interpolated = series.replace(0, np.nan).interpolate(method='linear')
+        df_imputed['interpolasi'] = series_interpolated
+        st.write('Interpolasi Data 0 :')
+        st.dataframe(df_imputed[['RR_Imputed', 'interpolasi']])
+        Q1 = df_imputed['interpolasi'].quantile(0.25)
+        Q3 = df_imputed['interpolasi'].quantile(0.75)
         IQR = Q3 - Q1
-        is_outlier_iqr = (df_imputed['RR_Imputed'] < (Q1 - 1.5 * IQR)) | (df_imputed['RR_Imputed'] > (Q3 + 1.5 * IQR))
+        is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
         outliers = is_outlier_iqr
         df_imputed['Outlier'] = outliers
         st.session_state.df_imputed = df_imputed
         st.write('Dataset yang termasuk outlier :')
-        st.dataframe(df_imputed[['RR_Imputed', 'Outlier']])
+        st.dataframe(df_imputed[['interpolasi', 'Outlier']])
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
