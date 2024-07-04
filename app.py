@@ -28,7 +28,7 @@ st.title("PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING 
 # Add a sidebar title
 st.sidebar.title("Main Menu")
 
-menu = st.sidebar.radio("Go to", ["Dataset", "Imputasi Missing Value Menggunakan KNN", "Deteksi Outlier Menggunakan IQR", "Normalisasi Data", "Model LSTM", "Prediksi LSTM", "Implementasi"])
+menu = st.sidebar.radio("Go to", ["Dataset", "Imputasi Missing Value Menggunakan KNN", "Deteksi Outlier Menggunakan IQR dan Interpolasi Linear", "Normalisasi Data", "Model LSTM", "Prediksi LSTM", "Implementasi"])
 
 if 'df' not in st.session_state:
     st.session_state.df = None
@@ -65,7 +65,7 @@ elif menu == "Imputasi Missing Value Menggunakan KNN":
         st.write(df_comparison)
     else:
         st.write("Silahkan masukkan dataset terlebih dahulu.")
-elif menu == "Deteksi Outlier Menggunakan IQR":
+elif menu == "Deteksi Outlier Menggunakan IQR dan Interpolasi Linear":
     df_imputed = st.session_state.df_imputed
     if df_imputed is not None:
         series = pd.Series(df_imputed['RR_Imputed'])
