@@ -73,29 +73,31 @@ elif menu == "Deteksi Outlier Menggunakan IQR":
         df_imputed['interpolasi'] = series_interpolated
         st.write('Interpolasi Data 0 :')
         st.dataframe(df_imputed[['RR_Imputed', 'interpolasi']])
-        Q1 = df_imputed['interpolasi'].quantile(0.25)
-        Q3 = df_imputed['interpolasi'].quantile(0.75)
-        IQR = Q3 - Q1
-        is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
-        outliers = is_outlier_iqr
-        df_imputed['Outlier'] = outliers
-        st.session_state.df_imputed = df_imputed
-        st.write('Dataset yang termasuk outlier :')
-        st.dataframe(df_imputed[['interpolasi', 'Outlier']])
-        # Replace outliers with linear interpolation values
-        data_cleaned = df_imputed['interpolasi'].copy()
-        for i, is_outlier in enumerate(outliers):
-            if is_outlier:
-                if i == 0:
-                    # If the first element is an outlier, replace it with the next value
-                    data_cleaned[i] = df_imputed['interpolasi'].iloc[i+1]
-                elif i == len(df_imputed['interpolasi']) - 1:
-                    # If the last element is an outlier, replace it with the previous value
-                    data_cleaned[i] = df_imputed['interpolasi'].iloc[i-1]
-                else:
-                    # For other elements, replace with linear interpolation
-                    data_cleaned[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
-        df_imputed['interpolasi outlier'] = data_cleaned.copy()
+        for _ in range(10):
+            Q1 = df_imputed['interpolasi'].quantile(0.25)
+            Q3 = df_imputed['interpolasi'].quantile(0.75)
+            IQR = Q3 - Q1
+            is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
+            outliers = is_outlier_iqr
+            df_imputed['Outlier'] = outliers
+            st.session_state.df_imputed = df_imputed
+            st.write('Dataset yang termasuk outlier:')
+            st.dataframe(df_imputed[['interpolasi', 'Outlier']])
+            
+            # Replace outliers with linear interpolation values
+            data_cleaned = df_imputed['interpolasi'].copy()
+            for i, is_outlier in enumerate(outliers):
+                if is_outlier:
+                    if i == 0:
+                        # If the first element is an outlier, replace it with the next value
+                        data_cleaned[i] = df_imputed['interpolasi'].iloc[i+1]
+                    elif i == len(df_imputed['interpolasi']) - 1:
+                        # If the last element is an outlier, replace it with the previous value
+                        data_cleaned[i] = df_imputed['interpolasi'].iloc[i-1]
+                    else:
+                        # For other elements, replace with linear interpolation
+                        data_cleaned[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
+        df_imputed['interpolasi outlier'] = data_cleaned
         st.session_state.df_imputed = df_imputed
         st.write('Data setelah dilakukan interpolasi :')
         st.dataframe(df_imputed[['interpolasi', 'interpolasi outlier']])
