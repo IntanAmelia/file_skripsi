@@ -113,7 +113,7 @@ elif menu == "Normalisasi Data":
         st.session_state.scaler = scaler
         scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
         df_imputed['Normalisasi'] = scaled_data
-        df_normalisasi = pd.concat([df_interpolasi, df_imputed['Normalisasi'], axis=1)
+        df_normalisasi = pd.concat([df_interpolasi, df_imputed['Normalisasi']], axis=1)
         st.session_state.df_imputed = df_imputed
         st.session_state.scaled_data = scaled_data
         st.write('Data setelah dilakukan normalisasi :')
