@@ -111,9 +111,9 @@ elif menu == "Normalisasi Data":
     if df_interpolasi is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
-        scaled_data = scaler.fit_transform(df_imputed['interpolasi outlier'].values.reshape(-1,1))
+        scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
         df_imputed['Normalisasi'] = scaled_data
-        df_normalisasi = df_imputed[['interpolasi outlier','Normalisasi']]
+        df_normalisasi = pd.concat([df_interpolasi, df_imputed['Normalisasi'], axis=1)
         st.session_state.df_imputed = df_imputed
         st.session_state.scaled_data = scaled_data
         st.write('Data setelah dilakukan normalisasi :')
@@ -175,7 +175,7 @@ elif menu == "Model LSTM":
                 st.session_state.model = model
                 return model
     
-            model = load_model('model_knn_n_4_epochs_100_lr_0.01_ts_25.h5')
+            model = build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate)
             st.session_state.model = model
             st.write("Model telah disimpan dan dilatih.")
     else:
