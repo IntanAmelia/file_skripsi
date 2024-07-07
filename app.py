@@ -99,11 +99,8 @@ elif menu == "Deteksi Outlier Menggunakan IQR dan Interpolasi Linear":
                         data_cleaned[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
         df_imputed['interpolasi outlier'] = data_cleaned
         st.session_state.df_imputed = df_imputed
-        df_interpolasi = pd.read_csv('interpolasi_n_4.csv')
-        st.session_state.df_interpolasi = df_interpolasi
-        df_compare = pd.concat([df_imputed['interpolasi'], df_interpolasi], axis=1)
         st.write('Data setelah dilakukan interpolasi :')
-        st.dataframe(df_compare)
+        st.dataframe(df_imputed[['interpolasi', 'interpolasi outlier']])
     else:
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
@@ -112,9 +109,9 @@ elif menu == "Normalisasi Data":
     if df_interpolasi is not None and df_imputed is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
-        scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
+        scaled_data = scaler.fit_transform(df_imputed['interpolasi outlier'].values.reshape(-1,1))
         df_imputed['Normalisasi'] = scaled_data
-        df_normalisasi = pd.concat([df_interpolasi, df_imputed['Normalisasi']], axis=1)
+        df_normalisasi = df_imputed[['interpolasi outlier','Normalisasi']]
         st.session_state.df_imputed = df_imputed
         st.session_state.scaled_data = scaled_data
         st.write('Data setelah dilakukan normalisasi :')
