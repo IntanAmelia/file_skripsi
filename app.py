@@ -108,7 +108,8 @@ elif menu == "Deteksi Outlier Menggunakan IQR dan Interpolasi Linear":
         st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
 elif menu == "Normalisasi Data":
     df_interpolasi = st.session_state.df_interpolasi
-    if df_interpolasi is not None:
+    df_imputed = st.session_state.df_imputed
+    if df_interpolasi is not None and df_imputed is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
         scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
