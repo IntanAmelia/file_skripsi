@@ -172,7 +172,8 @@ elif menu == "Model LSTM":
                 st.session_state.model = model
                 return model
     
-            model = build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate)
+            model = load_model('model_knn_n_4_epochs_100_lr_0.01_ts_25.h5')
+            st.session_state.model = model
             st.write("Model telah disimpan dan dilatih.")
     else:
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
