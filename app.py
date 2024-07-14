@@ -126,7 +126,7 @@ elif menu == "Model LSTM":
     scaler = st.session_state.scaler
     scaled_data = st.session_state.scaled_data
     if df_imputed is not None and scaler is not None and scaled_data is not None:
-        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=12)
+        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=100)
         learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
         time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=75, value=25)
         split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.7)
@@ -213,7 +213,7 @@ elif menu == "Implementasi":
     data_prediksi_uji = st.session_state.data_prediksi_uji
     time_steps = st.session_state.time_steps
     if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None and y_test is not None:
-        n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 356])
+        n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         x_last_window = np.array(x_test[-time_steps:], dtype=np.float32).reshape((1, -1, 1))
         y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.reshape(-1, 1))
