@@ -176,7 +176,7 @@ elif menu == "Model LSTM":
                 st.session_state.model = model
                 return model
     
-            model = load_model('model_knn_n_4_epochs_100_lr_0.01_ts_25.h5')
+            model = build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate)
             st.session_state.model = model
             st.write("Model telah disimpan dan dilatih.")
     else:
