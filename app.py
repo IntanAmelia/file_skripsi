@@ -170,10 +170,10 @@ elif menu == "Implementasi":
     y_test = st.session_state.y_test
     model = st.session_state.model
     scaler = st.session_state.scaler
-    df_imputed = st.session_state.df_imputed
+    df = st.session_state.df
     data_prediksi_uji = st.session_state.data_prediksi_uji
     time_steps = st.session_state.time_steps
-    if x_test is not None and model is not None and scaler is not None and df_imputed is not None and data_prediksi_uji is not None and time_steps is not None and y_test is not None:
+    if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and time_steps is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         x_last_window = np.array(x_test[-time_steps:], dtype=np.float32).reshape((1, -1, 1))
