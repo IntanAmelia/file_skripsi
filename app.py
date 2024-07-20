@@ -143,20 +143,19 @@ elif menu == "Model LSTM":
     else:
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.df_imputed is not None and st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
+    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
         test_predictions = st.session_state.model.predict(st.session_state.x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
-        y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.reshape(-1, 1))
-        mape_test = mean_absolute_percentage_error(y_test_scaler, test_predictions_data)*100
+        rmse = np.sqrt(np.mean((df[-len(st.session_state.x_test):] - test_predictions_data) ** 2))
         st.write('Hasil Prediksi Data Uji:')
         st.write(data_prediksi_uji)
-        st.write('MAPE Data Uji')
-        st.write(mape_test)
+        st.write('RMSE Data Uji')
+        st.write(rmse)
         plt.figure(figsize=(20, 7))
-        plt.plot(st.session_state.df_imputed['Tanggal'][-len(st.session_state.x_test):], y_test_scaler, color='blue', label='Curah Hujan Asli')
-        plt.plot(st.session_state.df_imputed['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
+        plt.plot(st.session_state.df['Tanggal'][-len(st.session_state.x_test):], st.session_state.df['RR'][-len(st.session_state.x_test):], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
         plt.ylabel('Curah Hujan (mm)')
