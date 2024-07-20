@@ -148,7 +148,8 @@ elif menu == "Prediksi LSTM":
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
-        rmse = np.sqrt(np.mean((st.session_state.df['RR'][-len(st.session_state.x_test):] - test_predictions_data) ** 2))
+        data_asli = st.session_state.df['RR'][-len(st.session_state.x_test):].to_numpy()
+        rmse = np.sqrt(np.mean((data_asli - test_predictions_data) ** 2))
         st.write('Hasil Prediksi Data Uji:')
         st.write(data_prediksi_uji)
         st.write('RMSE Data Uji')
