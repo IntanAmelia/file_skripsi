@@ -68,22 +68,20 @@ elif menu == "Deteksi Outlier dan Interpolasi Linear":
         st.write('Data setelah dilakukan interpolasi :')
         st.dataframe(df[['RR', 'interpolasi outlier']])
     else:
-        st.write('Silahkan melakukan input dataset terlebih dahulu.')
+        st.write('Silahkan memasukkan dataset terlebih dahulu.')
 elif menu == "Normalisasi Data":
-    df_interpolasi = st.session_state.df_interpolasi
-    df_imputed = st.session_state.df_imputed
-    if df_interpolasi is not None and df_imputed is not None:
+    df = st.session_state.df
+    if df is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
         scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
-        df_imputed['Normalisasi'] = scaled_data
-        df_normalisasi = pd.concat([df_interpolasi, df_imputed['Normalisasi']], axis=1)
-        st.session_state.df_imputed = df_imputed
+        df['Normalisasi'] = scaled_data
+        st.session_state.df = df
         st.session_state.scaled_data = scaled_data
         st.write('Data setelah dilakukan normalisasi :')
-        st.write(df_normalisasi)
+        st.write(df[['interpolasi outlier', 'Normalisasi']])
     else:
-        st.write('Silahkan masukkan dataset terlebih dahulu')
+        st.write('Silahkan melakukan deteksi outlier terlebih dahulu')
 elif menu == "Model LSTM":
     df_imputed = st.session_state.df_imputed
     scaler = st.session_state.scaler
