@@ -48,64 +48,28 @@ if menu == "Dataset":
     st.session_state.df = df
     st.write("Dataset Curah Hujan : ")
     st.write(df)
-elif menu == "Imputasi Missing Value Menggunakan KNN":
+elif menu == "Deteksi Outlier dan Interpolasi Linear":
     df = st.session_state.df
     if df is not None:
-        missing_data = df[df.isna().any(axis=1)]
-        st.write('Data yang Mempunyai Missing Value :')
-        st.write(missing_data)
-        k = st.selectbox("Pilih nilai k (jumlah tetangga terdekat) :", [3, 4, 5])
-        preprocessing = KNNImputer(n_neighbors=k)
-        data_imputed = preprocessing.fit_transform(df[['RR']])
-        df_imputed = df.copy()
-        df_imputed['RR_Imputed'] = data_imputed
-        st.session_state.df_imputed = df_imputed
-        df_comparison = df_imputed[['Tanggal', 'RR', 'RR_Imputed']]
-        st.write('Data yang telah dilakukan Proses Imputasi Missing Value dengan KNN')
-        st.write(df_comparison)
-    else:
-        st.write("Silahkan masukkan dataset terlebih dahulu.")
-elif menu == "Deteksi Outlier Menggunakan IQR dan Interpolasi Linear":
-    df_imputed = st.session_state.df_imputed
-    if df_imputed is not None:
-        series = pd.Series(df_imputed['RR_Imputed'])
-        series_interpolated = series.replace(0, np.nan).interpolate(method='linear')
-        df_imputed['interpolasi'] = series_interpolated
-        st.write('Interpolasi Data 0 :')
-        st.dataframe(df_imputed[['RR_Imputed', 'interpolasi']])
-        for _ in range(10):
-            Q1 = df_imputed['interpolasi'].quantile(0.25)
-            Q3 = df_imputed['interpolasi'].quantile(0.75)
-            IQR = Q3 - Q1
-            is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
-            outliers = is_outlier_iqr
-            df_imputed['Outlier'] = outliers
-            st.session_state.df_imputed = df_imputed
-            st.write('Dataset yang termasuk outlier:')
-            st.dataframe(df_imputed[['interpolasi', 'Outlier']])
+        is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
+        outliers = is_outlier_iqr
+        df['Outlier'] = outliers
+        st.session_state.df = df
+        st.write('Dataset yang termasuk outlier:')
+        st.dataframe(df[['RR', 'Outlier']])
             
-            # Replace outliers with linear interpolation values
-            data_cleaned = df_imputed['interpolasi'].copy()
-            for i, is_outlier in enumerate(outliers):
-                if is_outlier:
-                    if i == 0:
-                        # If the first element is an outlier, replace it with the next value
-                        data_cleaned[i] = df_imputed['interpolasi'].iloc[i+1]
-                    elif i == len(df_imputed['interpolasi']) - 1:
-                        # If the last element is an outlier, replace it with the previous value
-                        data_cleaned[i] = df_imputed['interpolasi'].iloc[i-1]
-                    else:
-                        # For other elements, replace with linear interpolation
-                        data_cleaned[i] = (df_imputed['interpolasi'].iloc[i-1] + df_imputed['interpolasi'].iloc[i+1]) / 2
-        df_imputed['interpolasi outlier'] = data_cleaned
-        st.session_state.df_imputed = df_imputed
-        df_interpolasi = pd.read_csv('interpolasi_n_4.csv')
-        st.session_state.df_interpolasi = df_interpolasi
-        df_compare = pd.concat([df_imputed['interpolasi'], df_interpolasi], axis=1)
+        # Replace outliers with linear interpolation values
+        data_cleaned = df_imputed['interpolasi'].copy()
+        for i, is_outlier in enumerate(outliers):
+            if is_outlier:
+                data_cleaned[i] = (df['RR'].iloc[i-1] + df['RR'].iloc[i+1]) / 2
+        df['interpolasi outlier'] = data_cleaned
+        st.session_state.df = df
+        df_compare = df['RR', 'interpolasi outlier']
         st.write('Data setelah dilakukan interpolasi :')
         st.dataframe(df_compare)
     else:
-        st.write('Silahkan melakukan imputasi missing value terlebih dahulu.')
+        st.write('Silahkan melakukan input dataset terlebih dahulu.')
 elif menu == "Normalisasi Data":
     df_interpolasi = st.session_state.df_interpolasi
     df_imputed = st.session_state.df_imputed
