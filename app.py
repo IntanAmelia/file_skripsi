@@ -74,7 +74,7 @@ elif menu == "Normalisasi Data":
     if df is not None:
         scaler = MinMaxScaler(feature_range=(0, 1))
         st.session_state.scaler = scaler
-        scaled_data = scaler.fit_transform(df_interpolasi.values.reshape(-1,1))
+        scaled_data = scaler.fit_transform(df['interpolasi outlier'].values.reshape(-1,1))
         df['Normalisasi'] = scaled_data
         st.session_state.df = df
         st.session_state.scaled_data = scaled_data
