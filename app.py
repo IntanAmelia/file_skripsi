@@ -23,7 +23,7 @@ from keras.layers import Dense, LSTM, Dropout
 from keras.models import load_model
 
 # Set the title of the app
-st.title("PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM DAN K-NN DALAM IMPUTASI MISSING VALUE")
+st.title("PREDIKSI CURAH HUJAN MENGGUNAKAN LSTM")
 
 # Add a sidebar title
 st.sidebar.title("Main Menu")
