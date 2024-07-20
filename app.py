@@ -65,9 +65,8 @@ elif menu == "Deteksi Outlier dan Interpolasi Linear":
                 data_cleaned[i] = (df['RR'].iloc[i-1] + df['RR'].iloc[i+1]) / 2
         df['interpolasi outlier'] = data_cleaned
         st.session_state.df = df
-        df_compare = df['RR', 'interpolasi outlier']
         st.write('Data setelah dilakukan interpolasi :')
-        st.dataframe(df_compare)
+        st.dataframe(df[['RR', 'interpolasi outlier']])
     else:
         st.write('Silahkan melakukan input dataset terlebih dahulu.')
 elif menu == "Normalisasi Data":
