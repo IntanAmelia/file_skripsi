@@ -51,7 +51,7 @@ if menu == "Dataset":
 elif menu == "Deteksi Outlier dan Interpolasi Linear":
     df = st.session_state.df
     if df is not None:
-        is_outlier_iqr = (df_imputed['interpolasi'] < (Q1 - 1.5 * IQR)) | (df_imputed['interpolasi'] > (Q3 + 1.5 * IQR))
+        is_outlier_iqr = (df['RR'] < 0) | (df['RR'] > 100)
         outliers = is_outlier_iqr
         df['Outlier'] = outliers
         st.session_state.df = df
