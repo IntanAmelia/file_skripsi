@@ -59,7 +59,7 @@ elif menu == "Deteksi Outlier dan Interpolasi Linear":
         st.dataframe(df[['RR', 'Outlier']])
             
         # Replace outliers with linear interpolation values
-        data_cleaned = df_imputed['interpolasi'].copy()
+        data_cleaned = df['RR'].copy()
         for i, is_outlier in enumerate(outliers):
             if is_outlier:
                 data_cleaned[i] = (df['RR'].iloc[i-1] + df['RR'].iloc[i+1]) / 2
