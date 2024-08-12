@@ -94,7 +94,7 @@ elif menu == "Model LSTM":
     
         if st.button('Simpan'):
             values = scaled_data
-            training_data_len = math.ceil(len(values) * 0.7)
+            training_data_len = math.ceil(len(values) * 0.9)
             st.session_state.training_data_len = training_data_len
             train_data = scaled_data[:training_data_len]
 
