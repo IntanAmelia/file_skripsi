@@ -93,48 +93,14 @@ elif menu == "Model LSTM":
         st.session_state.time_steps = time_steps
     
         if st.button('Simpan'):
-            values = scaled_data
-            training_data_len = math.ceil(len(values) * 0.9)
-            st.session_state.training_data_len = training_data_len
-            train_data = scaled_data[:training_data_len]
-
-            x_train = []
-            y_train = []
-
-            for i in range(time_steps, len(train_data)):
-                x_train.append(train_data[i - time_steps:i, 0])
-                y_train.append(train_data[i, 0])
-
-            x_train, y_train = np.array(x_train), np.array(y_train)
-            x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-
-            test_data = scaled_data[training_data_len - time_steps:]
-            x_test = []
-            y_test = []
-
-            for i in range(time_steps, len(test_data)):
-                x_test.append(test_data[i - time_steps:i, 0])
-                y_test.append(test_data[i, 0])
-
-            x_test, y_test = np.array(x_test), np.array(y_test)
-            x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+            x_train = pd.read_csv('xtrain_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+            y_train = pd.read_csv('ytrain_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+            x_test = pd.read_csv('xtest_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+            y_test = pd.read_csv('ytest_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
             st.session_state.x_train = x_train
             st.session_state.x_test = x_test
             st.session_state.y_train = y_train
             st.session_state.y_test = y_test
-    
-            def build_and_train_lstm(x_train, y_train, x_test, y_test, epochs, learning_rate):
-                model = Sequential()
-                model.add(LSTM(100, name='lstm_layer_1', return_sequences=True, input_shape=(x_train.shape[1], 1)))
-                model.add(Dropout(0.5))
-                model.add(LSTM(100, name='lstm_layer_2'))
-                model.add(Dropout(0.5))
-                model.add(Dense(1))
-                optimizer = Adam(learning_rate=learning_rate)
-                model.compile(optimizer=optimizer, loss='mean_squared_error')
-                model.fit(x_train, y_train, batch_size=32, epochs=epochs, validation_data=(x_test, y_test))
-                st.session_state.model = model
-                return model
     
             model = load_model('model_splitdata_0.9_epochs_100_lr_0.01_ts_25.h5')
             st.session_state.model = model
@@ -143,19 +109,18 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
-        x_test = pd.read_csv('xtest_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
-        test_predictions = st.session_state.model.predict(x_test)
+        test_predictions = st.session_state.model.predict(st.session_state.x_test[:170])
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
-        data_asli = st.session_state.df['RR'][-len(x_test):].to_numpy()
+        data_asli = st.session_state.df['RR'][170:].to_numpy()
         rmse = np.sqrt(np.mean((data_asli - test_predictions_data) ** 2))
         st.write('Hasil Prediksi Data Uji:')
         st.write(data_prediksi_uji)
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
-        plt.plot(st.session_state.df['Tanggal'][-len(x_test):], st.session_state.df['RR'][-len(x_test):], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df['Tanggal'][170:], st.session_state.df['RR'][170:], color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
