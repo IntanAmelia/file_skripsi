@@ -42,8 +42,7 @@ if menu == "Dataset":
     """, unsafe_allow_html=True)
 
     st.write('Dataset ini berisi data tentang curah hujan. Dataset yang digunakan pada penelitian ini berasal dari website https://dataonline.bmkg.go.id berdasarkan hasil pengamatan Badan Meteorologi, Klimatologi, dan Geofisika Stasiun Meteorologi Maritim Tanjung Perak dari 1 Januari 2019 hingga 31 Agustus 2023.')
-    missing_values = ['8888']
-    df = pd.read_excel('Dataset_Curah_Hujan.xlsx', na_values = missing_values)
+    df = pd.read_excel('Dataset_Curah_Hujan.xlsx')
     df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
     st.session_state.df = df
     st.write("Dataset Curah Hujan : ")
@@ -144,7 +143,8 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
-        test_predictions = st.session_state.model.predict(st.session_state.x_test)
+        x_test = pd.read_csv('xtest_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+        test_predictions = st.session_state.model.predict(x_test)
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
