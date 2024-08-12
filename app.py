@@ -86,13 +86,7 @@ elif menu == "Model LSTM":
     scaler = st.session_state.scaler
     scaled_data = st.session_state.scaled_data
     if df is not None and scaler is not None and scaled_data is not None:
-        epochs = st.number_input("Masukkan nilai epoch:", min_value=1, max_value=100, value=100)
-        learning_rate = st.number_input("Masukkan nilai learning rate:", min_value=0.0001, max_value=0.01, value=0.01)
-        time_steps = st.number_input("Masukkan nilai time step:", min_value=25, max_value=75, value=25)
-        split_data = st.number_input("Masukkan nilai data train:", min_value=0.5, max_value=0.9, value=0.9)
-        st.session_state.time_steps = time_steps
-    
-        if st.button('Simpan'):
+        if st.button('Load Model'):
             x_train = pd.read_csv('xtrain_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
             y_train = pd.read_csv('ytrain_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
             x_test = pd.read_csv('xtest_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
@@ -104,11 +98,11 @@ elif menu == "Model LSTM":
     
             model = load_model('model_splitdata_0.9_epochs_100_lr_0.01_ts_25.h5')
             st.session_state.model = model
-            st.write("Model telah disimpan dan dilatih.")
+            st.write("Model telah berhasil di load.")
     else:
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.training_data_len is not None and st.session_state.time_steps is not None:
+    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.time_steps is not None:
         test_predictions = st.session_state.model.predict(st.session_state.x_test[:170])
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
