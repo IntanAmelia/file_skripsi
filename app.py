@@ -105,10 +105,10 @@ elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
         test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
         st.session_state.test_predictions = test_predictions
-        data_asli = st.session_state.df['RR'][170:].to_numpy()
-        rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
+        data_asli = st.session_state.df['RR'][170:].to_numpy()
+        rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
