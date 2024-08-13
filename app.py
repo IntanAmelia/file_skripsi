@@ -103,9 +103,8 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
-        test_predictions = st.session_state.model.predict(st.session_state.x_test[:170])
-        test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
-        data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
+        test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+        data_prediksi_uji = pd.DataFrame(test_predictions, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
         data_asli = st.session_state.df['RR'][170:].to_numpy()
         rmse = np.sqrt(np.mean((data_asli - test_predictions_data) ** 2))
@@ -114,7 +113,7 @@ elif menu == "Prediksi LSTM":
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
-        plt.plot(st.session_state.df['Tanggal'][:170], st.session_state.df['RR'][:170], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df['Tanggal'][170:], st.session_state.df['RR'][170:], color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
