@@ -135,7 +135,7 @@ elif menu == "Implementasi":
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         x_last_window = np.array(x_test[25:], dtype=np.float32).reshape((1, -1, 1))
-        y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.reshape(-1, 1))
+        y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.values.reshape(-1, 1))
         for _ in range(n):
             # Predict the next time step
             prediction = model.predict(x_last_window)
