@@ -104,17 +104,16 @@ elif menu == "Model LSTM":
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
         test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
-        data_prediksi_uji = pd.DataFrame(test_predictions, columns=['Hasil Prediksi Data Uji'])
-        st.session_state.data_prediksi_uji = data_prediksi_uji
+        st.session_state.test_predictions = test_predictions
         data_asli = st.session_state.df['RR'][170:].to_numpy()
-        rmse = np.sqrt(np.mean((data_asli - test_predictions.values) ** 2))
+        rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
         st.write('Hasil Prediksi Data Uji:')
-        st.write(data_prediksi_uji)
+        st.write(test_predictions)
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
         plt.plot(st.session_state.df['Tanggal'][170:], st.session_state.df['RR'][170:], color='blue', label='Curah Hujan Asli')
-        plt.plot(st.session_state.df['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
+        plt.plot(st.session_state.df['Tanggal'].iloc[-len(test_predictions):], test_predictions, color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
         plt.ylabel('Curah Hujan (mm)')
@@ -129,8 +128,8 @@ elif menu == "Implementasi":
     model = st.session_state.model
     scaler = st.session_state.scaler
     df = st.session_state.df
-    data_prediksi_uji = st.session_state.data_prediksi_uji
-    if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and y_test is not None:
+    test_predictions = st.session_state.test_predictions
+    if x_test is not None and model is not None and scaler is not None and df is not None and test_predictions is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         x_last_window = np.array(x_test[:170], dtype=np.float32)
