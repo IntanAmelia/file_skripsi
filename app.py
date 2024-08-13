@@ -102,7 +102,7 @@ elif menu == "Model LSTM":
     else:
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
-    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None and st.session_state.time_steps is not None:
+    if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
         test_predictions = st.session_state.model.predict(st.session_state.x_test[:170])
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
@@ -131,8 +131,7 @@ elif menu == "Implementasi":
     scaler = st.session_state.scaler
     df = st.session_state.df
     data_prediksi_uji = st.session_state.data_prediksi_uji
-    time_steps = st.session_state.time_steps
-    if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and time_steps is not None and y_test is not None:
+    if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         x_last_window = np.array(x_test[25:], dtype=np.float32).reshape((1, -1, 1))
