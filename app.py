@@ -134,7 +134,7 @@ elif menu == "Implementasi":
     if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
-        x_last_window = np.array(x_test[:170], dtype=np.float32).reshape((1, -1, 1))
+        x_last_window = np.array(x_test[:170], dtype=np.float32)
         xlast_window = np.array(x_last_window[25:], dtype=np.float32).reshape((1, -1, 1))
         y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.values.reshape(-1, 1))
         for _ in range(n):
