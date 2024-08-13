@@ -103,7 +103,7 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.x_train is not None and st.session_state.x_test is not None and st.session_state.y_train is not None and st.session_state.y_test is not None and st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
-        test_predictions = st.session_state.model.predict(st.session_state.x_test[170:])
+        test_predictions = st.session_state.model.predict(st.session_state.x_test[:170])
         test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         data_prediksi_uji = pd.DataFrame(test_predictions_data, columns=['Hasil Prediksi Data Uji'])
         st.session_state.data_prediksi_uji = data_prediksi_uji
@@ -114,7 +114,7 @@ elif menu == "Prediksi LSTM":
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
-        plt.plot(st.session_state.df['Tanggal'][170:], st.session_state.df['RR'][170:], color='blue', label='Curah Hujan Asli')
+        plt.plot(st.session_state.df['Tanggal'][:170], st.session_state.df['RR'][:170], color='blue', label='Curah Hujan Asli')
         plt.plot(st.session_state.df['Tanggal'].iloc[-len(data_prediksi_uji):], data_prediksi_uji['Hasil Prediksi Data Uji'], color='red', label='Prediksi Curah Hujan')
         plt.title('Prediksi Curah Hujan')
         plt.xlabel('Tanggal')
@@ -134,16 +134,17 @@ elif menu == "Implementasi":
     if x_test is not None and model is not None and scaler is not None and df is not None and data_prediksi_uji is not None and y_test is not None:
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
-        x_last_window = np.array(x_test[25:], dtype=np.float32).reshape((1, -1, 1))
+        x_last_window = np.array(x_test[:170], dtype=np.float32).reshape((1, -1, 1))
+        xlast_window = np.array(x_last_window[25:], dtype=np.float32).reshape((1, -1, 1))
         y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.values.reshape(-1, 1))
         for _ in range(n):
             # Predict the next time step
-            prediction = model.predict(x_last_window)
+            prediction = model.predict(xlast_window)
             # Append the prediction to the list of future predictions
             future_predictions.append(prediction[0])
             
             # Update the last window by removing the first element and appending the prediction
-            x_last_window = np.append(x_last_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
+            x_last_window = np.append(xlast_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
             
         # Convert the list of future predictions to a numpy array
         future_predictions = np.array(future_predictions)
