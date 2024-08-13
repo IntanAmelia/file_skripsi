@@ -144,7 +144,7 @@ elif menu == "Implementasi":
             future_predictions.append(prediction[0])
             
             # Update the last window by removing the first element and appending the prediction
-            x_last_window = np.append(xlast_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
+            xlast_window = np.append(xlast_window[:, 1:, :], prediction.reshape(1, 1, 1), axis=1)
             
         # Convert the list of future predictions to a numpy array
         future_predictions = np.array(future_predictions)
