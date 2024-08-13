@@ -107,7 +107,7 @@ elif menu == "Prediksi LSTM":
         st.session_state.test_predictions = test_predictions
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
-        data_asli = st.session_state.df['RR'][170:].to_numpy()
+        data_asli = st.session_state.df['RR'][170:]
         rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
         st.write('RMSE Data Uji')
         st.write(rmse)
