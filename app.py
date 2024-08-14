@@ -116,7 +116,7 @@ elif menu == "Prediksi LSTM":
             rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
         else:
             st.write('Error: Mismatch in data lengths for RMSE calculation.')
-    rmse = np.nan
+            rmse = np.nan
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
