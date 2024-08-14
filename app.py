@@ -103,13 +103,12 @@ elif menu == "Model LSTM":
         st.write('Silahkan melakukan proses normalisasi data terlebih dahulu.')
 elif menu == "Prediksi LSTM":
     if st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
-        test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
-        test_predictions_data = pd.Series(test_predictions)
+        test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv').flatten()
         st.session_state.test_predictions = test_predictions
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
         data_asli = st.session_state.df['RR'][1534:].to_numpy()
-        rmse = np.sqrt(np.mean((st.session_state.df['RR'][1534:] - test_predictions_data) ** 2))
+        rmse = np.sqrt(np.mean((st.session_state.df['RR'][1534:] - test_predictions) ** 2))
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
