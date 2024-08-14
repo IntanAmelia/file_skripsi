@@ -109,7 +109,14 @@ elif menu == "Prediksi LSTM":
         st.write(test_predictions)
         df = pd.read_excel('Dataset_Curah_Hujan.xlsx')
         df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
-        rmse = np.sqrt(np.mean((df['RR'][1534:] - test_predictions) ** 2))
+        # Ensure actual and predicted data are of the same length
+        data_asli = df['RR'][170:170+len(test_predictions)].to_numpy()
+        
+        if len(data_asli) == len(test_predictions):
+            rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
+        else:
+            st.write('Error: Mismatch in data lengths for RMSE calculation.')
+    rmse = np.nan
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
@@ -134,7 +141,7 @@ elif menu == "Implementasi":
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         # x_last_window = np.array(x_test[:170], dtype=np.float32)
-        xlast_window = np.array(x_test[4225:][-1:,:,:], dtype=np.float32)
+        xlast_window = np.array(x_test[4225:], dtype=np.float32).reshape((1, -1, 1))
         y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.values.reshape(-1, 1))
         for _ in range(n):
             # Predict the next time step
