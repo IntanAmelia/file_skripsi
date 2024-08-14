@@ -116,7 +116,7 @@ elif menu == "Prediksi LSTM":
         if len(data_asli) == len(test_predictions):
             st.write(np.isnan(st.session_state.df['RR'][1534:]).sum())
             st.write(np.isnan(test_predictions).sum())
-            rmse = np.sqrt(np.mean((st.session_state.df['RR'][1534:] - test_predictions) ** 2))
+            rmse = np.mean((st.session_state.df['RR'][1534:] - test_predictions) ** 2)
         else:
             st.write('Error: Mismatch in data lengths for RMSE calculation.')
             rmse = np.nan
