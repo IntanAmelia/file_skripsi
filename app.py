@@ -111,7 +111,7 @@ elif menu == "Prediksi LSTM":
         df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
         # Ensure actual and predicted data are of the same length
         data_asli = df['RR'][170:170+len(test_predictions)].to_numpy()
-        st.write(data_asli)
+        st.write(df['RR'][170:])
         st.write(test_predictions)
         if len(data_asli) == len(test_predictions):
             rmse = np.sqrt(np.mean((data_asli - test_predictions) ** 2))
