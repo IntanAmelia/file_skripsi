@@ -158,7 +158,7 @@ elif menu == "Implementasi":
             
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n+1)
+        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n)
         if n == 1:
             plt.plot(future_dates, future_predictions_df, 'ro', label='Prediksi Selanjutnya')
         else:
