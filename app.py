@@ -107,10 +107,9 @@ elif menu == "Prediksi LSTM":
         st.session_state.test_predictions = test_predictions
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
-        data_asli = st.session_state.df['RR'][170:].to_numpy()
         df = pd.read_excel('Dataset_Curah_Hujan.xlsx')
         df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
-        rmse = np.sqrt(np.mean((df['RR'][170:] - test_predictions) ** 2))
+        rmse = np.sqrt(np.mean((df['RR'][1534:] - test_predictions) ** 2))
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
