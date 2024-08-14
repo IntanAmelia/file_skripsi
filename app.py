@@ -104,21 +104,12 @@ elif menu == "Model LSTM":
 elif menu == "Prediksi LSTM":
     if st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
         test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
+        test_predictions_data = st.session_state.scaler.inverse_transform(test_predictions)
         st.session_state.test_predictions = test_predictions
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
-        df = pd.read_excel('Dataset_Curah_Hujan.xlsx')
-        df['Tanggal'] = pd.to_datetime(df['Tanggal'], format='%d-%m-%Y')
-        # Ensure actual and predicted data are of the same length
-        data_asli = df['RR'][170:170+len(test_predictions)].to_numpy()
-        st.write(df['RR'][1534:])
-        st.write(test_predictions)
-        if len(data_asli) == len(test_predictions):
-            st.write(np.isnan(st.session_state.df['RR'][1534:]).sum())
-            st.write(np.isnan(test_predictions).sum())
-            rmse = np.sqrt(np.mean((st.session_state.df['RR'][1534:] - test_predictions) ** 2))
-        else:
-            st.write('Error: Mismatch in data lengths for RMSE calculation.')
+        data_asli = st.session_state.df['RR'][1534:].to_numpy()
+        rmse = np.sqrt(np.mean((st.session_state.df['RR'][1534:] - test_predictions_data) ** 2))
         st.write('RMSE Data Uji')
         st.write(rmse)
         plt.figure(figsize=(20, 7))
