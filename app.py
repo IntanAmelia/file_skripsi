@@ -158,12 +158,9 @@ elif menu == "Implementasi":
             
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n)
-        if n == 1:
-            plt.plot(future_dates, future_predictions_df, 'ro', label='Prediksi Selanjutnya')
-        else:
-            plt.plot(future_dates, future_predictions_df, color='red', label='Prediksi Selanjutnya')
-            
+        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n+1)  # Remove 'closed' parameter
+        future_dates = future_dates[1:]  # Exclude the first date to get the next n days
+        plt.plot(future_dates, future_predictions_denormalisasi, color='red', label='Prediksi 7 Hari Selanjutnya')
         plt.title('Prediksi Curah Hujan Selanjutnya')
         plt.xlabel('Tanggal')
         plt.ylabel('Curah Hujan (mm)')
