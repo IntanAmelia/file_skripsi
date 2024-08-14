@@ -134,7 +134,7 @@ elif menu == "Implementasi":
         n = st.selectbox("Pilih prediksi selanjutnya :", [1, 2, 7, 14, 30, 180, 365])
         future_predictions = []
         # x_last_window = np.array(x_test[:170], dtype=np.float32)
-        xlast_window = np.array(x_test[4225:], dtype=np.float32).reshape((1, -1, 1))
+        xlast_window = np.array(x_test[4225:][-1:,:,:], dtype=np.float32)
         y_test_scaler = st.session_state.scaler.inverse_transform(st.session_state.y_test.values.reshape(-1, 1))
         for _ in range(n):
             # Predict the next time step
@@ -158,7 +158,7 @@ elif menu == "Implementasi":
             
         # Plotting the predictions
         plt.figure(figsize=(12, 6))
-        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n+1, closed='right')
+        future_dates = pd.date_range(start=df['Tanggal'].iloc[-1], periods=n+1)
         if n == 1:
             plt.plot(future_dates, future_predictions_df, 'ro', label='Prediksi Selanjutnya')
         else:
