@@ -104,7 +104,7 @@ elif menu == "Model LSTM":
 elif menu == "Prediksi LSTM":
     if st.session_state.model is not None and st.session_state.scaler is not None and st.session_state.scaled_data is not None:
         test_predictions = pd.read_csv('predictions_splitdata_0.9_epochs_100_lr_0.01_ts_25.csv')
-        test_predictions_data = pd.DataFrame(test_predictions)
+        test_predictions_data = pd.Series(test_predictions)
         st.session_state.test_predictions = test_predictions
         st.write('Hasil Prediksi Data Uji:')
         st.write(test_predictions)
